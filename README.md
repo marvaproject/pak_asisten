@@ -41,6 +41,7 @@ Scelerisque suspendisse congue turpis non porta lacinia sollicitudin. Vehicula p
 
 https://www.tablesgenerator.com/markdown_tables
 
+<!-- Contributor -->
 ## Contributors 🧑‍💻
 
 |                  <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah                 | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah |
@@ -49,14 +50,15 @@ https://www.tablesgenerator.com/markdown_tables
 | [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/ahnafeanzs_) |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |
 | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/marvaathatillah) | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       |
 
+<!-- Download -->
 ## Download ⬇️
-![](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white&width=10)
-&nbsp;
-![](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 
+<img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white&width=10" height="50"/>
+&nbsp;
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" height="50"/>
+
+<!-- License -->
 ## License ⚖️
 
 This project is copyrighted. All copyrights are owned by the Group 3 Foundation of Artificial Intelligence course of Binus University. Use, modification, or distribution without written permission is prohibited.
-
-[![NAMA](SHIELDS)](LINK)
 </div>
