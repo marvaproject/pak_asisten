@@ -2,7 +2,8 @@
   
 <!-- Judul Project -->
 <img src="assets/logo/Logo Banner.png" alt="logo" width="50%" height="auto" />
-<h1>Pak Asisten</h1>
+
+# Pak Asisten
 
 <!-- Badge Repo Project -->
 [![Github Contributor](https://img.shields.io/github/contributors/marvaproject/pak_asisten?style=for-the-badge)](https://github.com/marvaproject/pak_asisten/graphs/contributors)
@@ -44,6 +45,9 @@ Scelerisque suspendisse congue turpis non porta lacinia sollicitudin. Vehicula p
 |               ![flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)               | ![](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white) |     ![](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)     | ![](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white) |
 |                    ![dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=whit)                    |   ![](https://img.shields.io/badge/-HuggingFace-FDEE21?style=for-the-badge&logo=HuggingFace&logoColor=black)   | ![](https://img.shields.io/badge/Canva-%2300C4CC.svg?&style=for-the-badge&logo=Canva&logoColor=white) |                                                                                                                             |
 | ![material design](https://img.shields.io/badge/material%20design-757575?style=for-the-badge&logo=material%20design&logoColor=white) |                                                                                                                |                                                                                                       |                                                                                                                             |
+
+<!-- Contributor -->
+## Architecture 🏗
 
 <!-- Contributor -->
 ## Contributors 🧑‍💻
