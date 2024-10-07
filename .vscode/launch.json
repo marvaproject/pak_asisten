@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/admin/Desktop/Binus University/Semester 1/Project/pak_asisten",
+      "program": "/Users/admin/Desktop/Binus University/Semester 1/Project/pak_asisten/build/Debug/outDebug"
+    }
+  ]
+}
