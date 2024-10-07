@@ -1,16 +1,62 @@
-# pak_asisten
+<div align="center">
+  
+<!-- Judul Project -->
+<img src="assets/logo.png" alt="logo" width="200" height="auto" />
+<h1>Pak Asisten</h1>
 
-A new Flutter project.
+<!-- Badge Repo Project -->
+[![NAMA](https://img.shields.io/github/contributors/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/graphs/contributors)
+![Github Last Commit](https://img.shields.io/github/last-commit/marvaproject/NAMA_PROJEK?style=for-the-badge)
+[![Github Forks](https://img.shields.io/github/forks/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/stargazers)
+[![GitHub License](https://img.shields.io/github/license/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/blob/main/LICENSE)
 
-## Getting Started
+<!-- Poster Project -->
+<img src="" width="90%"/>
 
-This project is a starting point for a Flutter application.
+<!-- Intro Project -->
+## Introduction 📖
 
-A few resources to get you started if this is your first Flutter project:
+Lorem ipsum odor amet, consectetuer adipiscing elit. Vulputate vehicula mi dis eget at odio. Vel ex felis eu montes; vitae mollis? Curabitur morbi venenatis sit nunc varius donec. Lacinia finibus donec convallis ornare erat pellentesque lacinia. Finibus cursus auctor nam hendrerit leo est cras nisi adipiscing.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Scelerisque suspendisse congue turpis non porta lacinia sollicitudin. Vehicula primis eleifend at dapibus scelerisque facilisis. Pretium egestas nibh hendrerit lobortis accumsan duis. Vitae quis convallis consectetur morbi morbi, penatibus class enim. Habitasse praesent porttitor pellentesque eu efficitur fames lobortis nulla augue. Iaculis viverra eu justo arcu commodo efficitur consequat mattis sollicitudin. Est nascetur auctor velit nisi sodales.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<!-- Fitur Project -->
+## Features 🛠️
+
+<p><img width="49%" src="LINK_GAMBAR"/>
+&nbsp;
+<img width="49%" src="LINK_GAMBAR"/></p>
+
+<p><img width="49%" src="LINK_GAMBAR"/>
+&nbsp;
+<img width="49%" src="LINK_GAMBAR"/></p>
+
+<p><img width="49%" src="LINK_GAMBAR"/>
+&nbsp;
+<img width="49%" src="LINK_GAMBAR"/></p>
+
+<!-- Teknologi yang Digunakan -->
+## Tech Stack 💻
+
+https://www.tablesgenerator.com/markdown_tables
+
+## Contributors 🧑‍💻
+
+|                  <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah                 | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah | <img src="https://drive.google.com/uc?id=1jlEoOibddz5SsAggfghiV6uKfnEjSQ8N" width="100"/><br>Marva Athatillah |
+|:----------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------:|
+|       [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marvaproject)       |      [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()      |      [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()      |      [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()      |      [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()      |
+| [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/ahnafeanzs_) |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |   [![](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)]()   |
+| [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/marvaathatillah) | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       | [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()       |
+
+## Download ⬇️
+![](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white&width=10)
+&nbsp;
+![](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+
+## License ⚖️
+
+This project is copyrighted. All copyrights are owned by the Group 3 Foundation of Artificial Intelligence course of Binus University. Use, modification, or distribution without written permission is prohibited.
+
+[![NAMA](SHIELDS)](LINK)
+</div>
