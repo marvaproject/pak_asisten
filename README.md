@@ -1,15 +1,15 @@
 <div align="center">
   
 <!-- Judul Project -->
-<img src="assets/logo.png" alt="logo" width="200" height="auto" />
+<img src="assets/logo/Logo Banner.png" alt="logo" width="50%" height="auto" />
 <h1>Pak Asisten</h1>
 
 <!-- Badge Repo Project -->
-[![NAMA](https://img.shields.io/github/contributors/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/graphs/contributors)
-![Github Last Commit](https://img.shields.io/github/last-commit/marvaproject/NAMA_PROJEK?style=for-the-badge)
-[![Github Forks](https://img.shields.io/github/forks/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/network/members)
-[![GitHub Stars](https://img.shields.io/github/stars/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/stargazers)
-[![GitHub License](https://img.shields.io/github/license/marvaproject/NAMA_PROJEK?style=for-the-badge)](https://github.com/marvaproject/NAMA_PROJEK/blob/main/LICENSE)
+[![Github Contributor](https://img.shields.io/github/contributors/marvaproject/pak_asisten?style=for-the-badge)](https://github.com/marvaproject/pak_asisten/graphs/contributors)
+![Github Last Commit](https://img.shields.io/github/last-commit/marvaproject/pak_asisten?style=for-the-badge)
+[![Github Forks](https://img.shields.io/github/forks/marvaproject/pak_asisten?style=for-the-badge)](https://github.com/marvaproject/pak_asisten/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/marvaproject/pak_asisten?style=for-the-badge)](https://github.com/marvaproject/pak_asisten/stargazers)
+[![GitHub License](https://img.shields.io/github/license/marvaproject/pak_asisten?style=for-the-badge)](https://github.com/marvaproject/pak_asisten/blob/main/LICENSE)
 
 <!-- Poster Project -->
 <img src="" width="90%"/>
