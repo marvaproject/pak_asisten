@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pak_asisten/chat_page.dart';
 
 void main() {
   runApp(const PakAsisten());
@@ -9,6 +10,8 @@ class PakAsisten extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      home: ChatPage(),
+    );
   }
 }
