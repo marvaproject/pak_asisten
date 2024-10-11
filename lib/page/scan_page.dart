@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pak_asisten/custom_class/color.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+class ScanPage extends StatefulWidget {
+  const ScanPage({super.key});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<ScanPage> createState() => _ScanPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
