@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pak_asisten/custom_class/color.dart';
 import 'package:pak_asisten/page/chat_page.dart';
@@ -20,15 +21,16 @@ class PakAsisten extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: AnimatedSplashScreen(
-      //Splash Screen
-      splash: 'assets/logo/LogoSplashScreen.gif',
-      splashIconSize: 300,
-      nextScreen: NavBar(),
-      duration: 2800,
-      splashTransition: SplashTransition.fadeTransition,
-      backgroundColor: Color.fromARGB(255, 13, 28, 58),
-    ));
+          //Splash Screen
+          splash: 'assets/logo/LogoSplashScreen.gif',
+          splashIconSize: 300,
+          nextScreen: NavBar(),
+          duration: 2800,
+          splashTransition: SplashTransition.fadeTransition,
+          backgroundColor: Color.fromARGB(255, 13, 28, 58),
+        ));
   }
 }
 
@@ -42,6 +44,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
+  bool status = false;
 
   static const List<Widget> _widgetOptions = <Widget>[
     ChatPage(),
@@ -55,17 +58,53 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          //App Bar
           elevation: 0.00,
           shape: Border(bottom: BorderSide(color: ColorSelect.borderTab)),
           backgroundColor: ColorSelect.lightBackground,
           title: Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: 10),
-            child: Column(children: [
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Image(
+                //Pak Asisten Logo
                 width: 200,
                 image: Svg('assets/logo/LightLogoAppBar.svg'),
               ),
+              Spacer(),
+              FlutterSwitch(
+                  //Switch Dark Mode
+                  width: 50,
+                  height: 30,
+                  toggleSize: 28,
+                  value: status,
+                  borderRadius: 30,
+                  padding: 2,
+                  activeToggleColor: ColorSelect.lightActiveIcon,
+                  inactiveToggleColor: ColorSelect.darkBackground,
+                  activeSwitchBorder: Border.all(
+                    color: ColorSelect.borderTab,
+                    width: 2,
+                  ),
+                  inactiveSwitchBorder: Border.all(
+                    color: ColorSelect.borderTab,
+                    width: 2,
+                  ),
+                  activeColor: ColorSelect.darkBackground,
+                  inactiveColor: ColorSelect.lightBackground,
+                  activeIcon: Icon(
+                    Icons.nightlight_round,
+                    color: Colors.amber,
+                  ),
+                  inactiveIcon: Icon(
+                    Icons.wb_sunny,
+                    color: Colors.amber,
+                  ),
+                  onToggle: (val) {
+                    setState(() {
+                      status = val;
+                    });
+                  })
             ]),
           ),
         ),
@@ -82,7 +121,7 @@ class _NavBarState extends State<NavBar> {
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 15, bottom: 20, right: 20, left: 20),
+                  top: 15, bottom: 30, right: 20, left: 20),
               child: GNav(
                 gap: 8,
                 hoverColor: Colors.transparent,
@@ -101,8 +140,8 @@ class _NavBarState extends State<NavBar> {
                 tabs: const [
                   GButton(icon: CustomIcon.chat, text: 'Chat'),
                   GButton(icon: CustomIcon.image, text: 'Image'),
-                  GButton(icon: CustomIcon.imagetotext, text: 'Scan'),
-                  GButton(icon: CustomIcon.logogenerator, text: 'Logo'),
+                  GButton(icon: CustomIcon.scan, text: 'Scan'),
+                  GButton(icon: CustomIcon.logo, text: 'Logo'),
                   GButton(icon: CustomIcon.illustration, text: 'Illustration'),
                 ],
                 selectedIndex: _selectedIndex,
