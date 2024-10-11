@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pak_asisten/chat_page.dart';
+import 'package:pak_asisten/page/chat_page.dart';
 
 void main() {
   runApp(const PakAsisten());
