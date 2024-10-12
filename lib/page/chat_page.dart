@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pak_asisten/custom_class/color.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});

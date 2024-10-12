@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:pak_asisten/custom_class/color.dart';
 import 'package:pak_asisten/page/chat_page.dart';
 import 'package:pak_asisten/page/illustration_page.dart';
 import 'package:pak_asisten/page/image_page.dart';

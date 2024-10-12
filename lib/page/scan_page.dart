@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pak_asisten/custom_class/color.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
