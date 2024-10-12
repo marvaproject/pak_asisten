@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:pak_asisten/custom_class/theme_provider.dart';
 import 'package:pak_asisten/page/chat_page.dart';
 import 'package:pak_asisten/page/illustration_page.dart';
 import 'package:pak_asisten/page/image_page.dart';
@@ -10,10 +11,16 @@ import 'package:pak_asisten/page/logo_page.dart';
 import 'package:pak_asisten/page/scan_page.dart';
 import 'package:pak_asisten/theme/dark_theme.dart';
 import 'package:pak_asisten/theme/light_theme.dart';
+import 'package:provider/provider.dart';
 import '../custom_class/custom_icon_icons.dart';
 
 void main() {
-  runApp(const PakAsisten());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const PakAsisten(),
+    ),
+  );
 }
 
 class PakAsisten extends StatelessWidget {
@@ -21,15 +28,19 @@ class PakAsisten extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        themeMode:
+            themeProvider.themeMode, // Menggunakan tema dari ThemeProvider
         theme: lightTheme,
         darkTheme: darkTheme,
         home: AnimatedSplashScreen(
           //Splash Screen
           splash: 'assets/logo/LogoSplashScreen.gif',
           splashIconSize: 300,
-          nextScreen: NavBar(),
+          nextScreen: const NavBar(),
           duration: 2800,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: Color.fromARGB(255, 13, 28, 58),
@@ -47,6 +58,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
+
   bool status = false;
 
   static const List<Widget> _widgetOptions = <Widget>[
@@ -59,51 +71,60 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark; // Cek mode tema
     return Scaffold(
         appBar: AppBar(
-          //App Bar
+          // App Bar
           elevation: 0,
-          shape: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.outline),),
+          shape: Border(
+            bottom: BorderSide(color: Theme.of(context).colorScheme.outline),
+          ),
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           title: Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: 10),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              SvgPicture.asset('assets/logo/LightLogoAppBar.svg', width: 150,),
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              SvgPicture.asset(
+                'assets/logo/LightLogoAppBar.svg',
+                width: 150,
+                color: isDarkMode ? Colors.white : null,
+              ),
               Spacer(),
               FlutterSwitch(
-                  //Switch Dark Mode
-                  width: 50,
-                  height: 30,
-                  toggleSize: 28,
-                  value: status,
-                  borderRadius: 30,
-                  padding: 2,
-                  activeToggleColor: Color(0xFF274688),
-                  inactiveToggleColor: Color(0xFF14274F),
-                  activeSwitchBorder: Border.all(
-                    color: Color(0xFF274688),
-                    width: 2,
-                  ),
-                  inactiveSwitchBorder: Border.all(
-                    color: Color(0xFF14274F),
-                    width: 2,
-                  ),
-                  activeColor: Color(0xFF14274F),
-                  inactiveColor: Color(0xFFF4F8FF),
-                  activeIcon: Icon(
-                    Icons.nightlight_round,
-                    color: Colors.amber,
-                  ),
-                  inactiveIcon: Icon(
-                    Icons.wb_sunny,
-                    color: Colors.amber,
-                  ),
-                  onToggle: (val) {
-                    setState(() {
-                      status = val;
-                    });
-                  })
+                // Switch Button Dark Mode
+                width: 50,
+                height: 30,
+                toggleSize: 28,
+                value: themeProvider.themeMode == ThemeMode.dark,
+                borderRadius: 30,
+                padding: 2,
+                activeToggleColor: Color(0xFF274688),
+                inactiveToggleColor: Color(0xFF14274F),
+                activeSwitchBorder: Border.all(
+                  color: Color(0xFF274688),
+                  width: 2,
+                ),
+                inactiveSwitchBorder: Border.all(
+                  color: Color(0xFF14274F),
+                  width: 2,
+                ),
+                activeColor: Color(0xFF14274F),
+                inactiveColor: Color(0xFFF4F8FF),
+                activeIcon: Icon(
+                  Icons.nightlight_round,
+                  color: Colors.amber,
+                ),
+                inactiveIcon: Icon(
+                  Icons.wb_sunny,
+                  color: Colors.amber,
+                ),
+                onToggle: (value) {
+                  themeProvider
+                      .toggleTheme(); // Memanggil fungsi untuk mengubah tema
+                },
+              )
             ]),
           ),
         ),
@@ -114,7 +135,8 @@ class _NavBarState extends State<NavBar> {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
             border: Border(
-              top: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
+              top: BorderSide(
+                  color: Theme.of(context).colorScheme.outline, width: 1,),
             ),
           ),
           child: SafeArea(
@@ -125,14 +147,25 @@ class _NavBarState extends State<NavBar> {
                 gap: 8,
                 hoverColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
-                activeColor: Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color,
-                tabBackgroundColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
-                color: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color,
+                activeColor: Theme.of(context)
+                    .bottomNavigationBarTheme
+                    .selectedIconTheme
+                    ?.color,
+                tabBackgroundColor: Theme.of(context)
+                    .bottomNavigationBarTheme
+                    .selectedItemColor!,
+                color: Theme.of(context)
+                    .bottomNavigationBarTheme
+                    .unselectedIconTheme
+                    ?.color,
                 iconSize: 22,
                 textStyle: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle?.color,
+                  color: Theme.of(context)
+                      .bottomNavigationBarTheme
+                      .selectedLabelStyle
+                      ?.color,
                 ),
                 tabMargin: EdgeInsets.all(0),
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),

@@ -21,11 +21,17 @@ class CustomIcon {
   static const _kFontFam = 'CustomIcon';
   static const String? _kFontPkg = null;
 
-  static const IconData chat = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData illustration = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData scan = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData image = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData logo = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData moon = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData sun = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData addimage = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData chat = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData camera = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData illustration = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData image = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData download = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData logo = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData moon = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData scan = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData send = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData share = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData sun = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData upload = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
