@@ -12,7 +12,7 @@ class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorSelect.lightBackground,
+      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }

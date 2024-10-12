@@ -12,7 +12,7 @@ class _IllustrationPageState extends State<IllustrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorSelect.lightBackground,
+      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }

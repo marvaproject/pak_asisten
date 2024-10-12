@@ -9,6 +9,8 @@ import 'package:pak_asisten/page/illustration_page.dart';
 import 'package:pak_asisten/page/image_page.dart';
 import 'package:pak_asisten/page/logo_page.dart';
 import 'package:pak_asisten/page/scan_page.dart';
+import 'package:pak_asisten/theme/dark_theme.dart';
+import 'package:pak_asisten/theme/light_theme.dart';
 import '../custom_class/custom_icon_icons.dart';
 
 void main() {
@@ -22,6 +24,8 @@ class PakAsisten extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: lightTheme,
+        darkTheme: darkTheme,
         home: AnimatedSplashScreen(
           //Splash Screen
           splash: 'assets/logo/LogoSplashScreen.gif',
@@ -60,8 +64,8 @@ class _NavBarState extends State<NavBar> {
         appBar: AppBar(
           //App Bar
           elevation: 0,
-          shape: Border(bottom: BorderSide(color: ColorSelect.borderTab)),
-          backgroundColor: ColorSelect.lightBackground,
+          shape: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.outline),),
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           title: Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: 10),
@@ -76,18 +80,18 @@ class _NavBarState extends State<NavBar> {
                   value: status,
                   borderRadius: 30,
                   padding: 2,
-                  activeToggleColor: ColorSelect.lightActiveIcon,
-                  inactiveToggleColor: ColorSelect.darkBackground,
+                  activeToggleColor: Color(0xFF274688),
+                  inactiveToggleColor: Color(0xFF14274F),
                   activeSwitchBorder: Border.all(
-                    color: ColorSelect.lightActiveIcon,
+                    color: Color(0xFF274688),
                     width: 2,
                   ),
                   inactiveSwitchBorder: Border.all(
-                    color: ColorSelect.darkBackground,
+                    color: Color(0xFF14274F),
                     width: 2,
                   ),
-                  activeColor: ColorSelect.darkBackground,
-                  inactiveColor: ColorSelect.lightBackground,
+                  activeColor: Color(0xFF14274F),
+                  inactiveColor: Color(0xFFF4F8FF),
                   activeIcon: Icon(
                     Icons.nightlight_round,
                     color: Colors.amber,
@@ -109,9 +113,9 @@ class _NavBarState extends State<NavBar> {
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: ColorSelect.lightBackground,
+            color: Theme.of(context).colorScheme.background,
             border: Border(
-              top: BorderSide(color: ColorSelect.borderTab, width: 1),
+              top: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
             ),
           ),
           child: SafeArea(
@@ -122,14 +126,14 @@ class _NavBarState extends State<NavBar> {
                 gap: 8,
                 hoverColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
-                activeColor: ColorSelect.lightActiveIcon,
-                tabBackgroundColor: ColorSelect.lightBackgroundIcon,
-                color: ColorSelect.lightIcon,
+                activeColor: Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color,
+                tabBackgroundColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
+                color: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color,
                 iconSize: 22,
                 textStyle: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: ColorSelect.lightActiveIcon,
+                  color: Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle?.color,
                 ),
                 tabMargin: EdgeInsets.all(0),
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
