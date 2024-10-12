@@ -58,8 +58,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
-
-  bool status = false;
+  late PageController _pageController;
 
   static const List<Widget> _widgetOptions = <Widget>[
     ChatPage(),
@@ -70,9 +69,22 @@ class _NavBarState extends State<NavBar> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark; // Cek mode tema
+    final isDarkMode =
+        Theme.of(context).brightness == Brightness.dark; // Cek mode tema
     return Scaffold(
         appBar: AppBar(
           // App Bar
@@ -128,15 +140,17 @@ class _NavBarState extends State<NavBar> {
             ]),
           ),
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        body: Container(
+        child: _widgetOptions[_selectedIndex],
+      ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
             border: Border(
               top: BorderSide(
-                  color: Theme.of(context).colorScheme.outline, width: 1,),
+                color: Theme.of(context).colorScheme.outline,
+                width: 1,
+              ),
             ),
           ),
           child: SafeArea(
@@ -178,9 +192,9 @@ class _NavBarState extends State<NavBar> {
                 ],
                 selectedIndex: _selectedIndex,
                 onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
+                setState(() {
+                  _selectedIndex = index;
+                });
                 },
               ),
             ),
