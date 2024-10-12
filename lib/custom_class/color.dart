@@ -13,4 +13,5 @@ class ColorSelect {
   static Color lightBackgroundIcon = const Color(0xFFD1DBF2);
   static Color darkBackgroundIcon = const Color(0xFF274688);
   static Color borderTab = const Color(0xFFEAEAEA);
+  static Color borderInput = const Color(0xFFBBBBBB);
 }

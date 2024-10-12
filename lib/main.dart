@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pak_asisten/custom_class/color.dart';
@@ -59,18 +59,14 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
         appBar: AppBar(
           //App Bar
-          elevation: 0.00,
+          elevation: 0,
           shape: Border(bottom: BorderSide(color: ColorSelect.borderTab)),
           backgroundColor: ColorSelect.lightBackground,
           title: Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: 10),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Image(
-                //Pak Asisten Logo
-                width: 200,
-                image: Svg('assets/logo/LightLogoAppBar.svg'),
-              ),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              SvgPicture.asset('assets/logo/LightLogoAppBar.svg', width: 150,),
               Spacer(),
               FlutterSwitch(
                   //Switch Dark Mode
@@ -83,11 +79,11 @@ class _NavBarState extends State<NavBar> {
                   activeToggleColor: ColorSelect.lightActiveIcon,
                   inactiveToggleColor: ColorSelect.darkBackground,
                   activeSwitchBorder: Border.all(
-                    color: ColorSelect.borderTab,
+                    color: ColorSelect.lightActiveIcon,
                     width: 2,
                   ),
                   inactiveSwitchBorder: Border.all(
-                    color: ColorSelect.borderTab,
+                    color: ColorSelect.darkBackground,
                     width: 2,
                   ),
                   activeColor: ColorSelect.darkBackground,
