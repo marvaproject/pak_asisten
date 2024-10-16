@@ -1,9 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:pak_asisten/custom_class/api_key.dart';
+import 'package:pak_asisten/custom_class/fetch_api.dart';
 import 'package:pak_asisten/custom_class/theme_provider.dart';
 import 'package:pak_asisten/page/chat_page.dart';
 import 'package:pak_asisten/page/illustration_page.dart';
@@ -16,8 +17,9 @@ import 'package:provider/provider.dart';
 import '../custom_class/custom_icon_icons.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
-void main() {
-  Gemini.init(apiKey: GEMINI_API_KEY);
+void main() async {
+  Gemini.init(apiKey: geminiApiKey!);
+  await dotenv.load(fileName: ".env");
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
