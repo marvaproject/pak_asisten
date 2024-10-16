@@ -1,10 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:pak_asisten/custom_class/fetch_api.dart';
+import 'package:pak_asisten/env/env.dart';
 import 'package:pak_asisten/custom_class/theme_provider.dart';
 import 'package:pak_asisten/page/chat_page.dart';
 import 'package:pak_asisten/page/illustration_page.dart';
@@ -17,9 +17,8 @@ import 'package:provider/provider.dart';
 import '../custom_class/custom_icon_icons.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
-Future<void> main() async {
-  Gemini.init(apiKey: geminiApiKey!);
-  await dotenv.load(fileName: ".env");
+void main() {
+  Gemini.init(apiKey: Env.geminiApiKey);
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
@@ -160,7 +159,7 @@ class _NavBarState extends State<NavBar> {
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 15, bottom: 20, right: 20, left: 20),
+                  top: 15, bottom: 25, right: 20, left: 20),
               child: GNav(
                 gap: 8,
                 hoverColor: Colors.transparent,

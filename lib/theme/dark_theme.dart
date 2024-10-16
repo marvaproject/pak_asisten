@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-
   colorScheme: ColorScheme.dark(
-      background: Color(0xFF14274F),
-      primary: Color(0xFF274688),
-      secondary: Color(0xFFF4F8FF),
-      outline: Color(0xFF274688)),
+    background: Color(0xFF14274F),
+    primary: Color(0xFF274688),
+    secondary: Color(0xFFF4F8FF),
+    outline: Color(0xFF274688),
+  ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFFBBBBBB)),
+      borderSide: BorderSide(
+        color: Color(0xFFBBBBBB),
+      ),
     ),
   ),
   appBarTheme: AppBarTheme(

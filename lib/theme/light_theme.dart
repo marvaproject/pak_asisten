@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.light(
-      background: Color(0xFFF4F8FF),
-      primary: Color(0xFF274688),
-      secondary: Color(0xFFFFFFFF),
-      outline: Color(0xFFBBBBBB)),
+    background: Color(0xFFF4F8FF),
+    primary: Color(0xFF274688),
+    secondary: Color(0xFFFFFFFF),
+    outline: Color(0xFFBBBBBB),
+  ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFFBBBBBB)),
+      borderSide: BorderSide(
+        color: Color(0xFFBBBBBB),
+      ),
     ),
   ),
   appBarTheme: AppBarTheme(
