@@ -32,5 +32,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _sendMessage(ChatMessage chatMessage) {
+    setState(() {
+      messages = [...messages, chatMessage]; 
+    });
   }
 }

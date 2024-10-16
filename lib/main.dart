@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 import '../custom_class/custom_icon_icons.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
-void main() async {
+Future<void> main() async {
   Gemini.init(apiKey: geminiApiKey!);
   await dotenv.load(fileName: ".env");
   runApp(
