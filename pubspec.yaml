@@ -18,6 +18,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
+ios:
+  info:
+    bundleName: Nama Aplikasi Anda
+
 environment:
   sdk: ^3.6.0-326.0.dev
 
@@ -40,8 +44,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   provider: ^6.1.2
   flutter_gemini: ^2.0.5
-  image_picker: ^1.1.2
   dash_chat_2: ^0.0.21
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

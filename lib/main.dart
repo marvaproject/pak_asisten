@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:pak_asisten/custom_class/api_key.dart';
 import 'package:pak_asisten/custom_class/theme_provider.dart';
 import 'package:pak_asisten/page/chat_page.dart';
 import 'package:pak_asisten/page/illustration_page.dart';
@@ -13,8 +14,10 @@ import 'package:pak_asisten/theme/dark_theme.dart';
 import 'package:pak_asisten/theme/light_theme.dart';
 import 'package:provider/provider.dart';
 import '../custom_class/custom_icon_icons.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 void main() {
+  Gemini.init(apiKey: GEMINI_API_KEY);
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
@@ -90,20 +93,19 @@ class _NavBarState extends State<NavBar> {
           // App Bar
           elevation: 0,
           shape: Border(
-            bottom: BorderSide(color: Theme.of(context).colorScheme.outline),
+            bottom: BorderSide(color: Theme.of(context).colorScheme.outline, width: 0.5),
           ),
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           title: Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: 10),
             child:
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               SvgPicture.asset(
                 'assets/logo/LightLogoAppBar.svg',
                 width: 150,
                 color: isDarkMode ? Colors.white : null,
               ),
-              Spacer(),
               FlutterSwitch(
                 // Switch Button Dark Mode
                 width: 50,
@@ -149,14 +151,14 @@ class _NavBarState extends State<NavBar> {
             border: Border(
               top: BorderSide(
                 color: Theme.of(context).colorScheme.outline,
-                width: 1,
+                width: 0.5,
               ),
             ),
           ),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 15, bottom: 30, right: 20, left: 20),
+                  top: 15, bottom: 20, right: 20, left: 20),
               child: GNav(
                 gap: 8,
                 hoverColor: Colors.transparent,

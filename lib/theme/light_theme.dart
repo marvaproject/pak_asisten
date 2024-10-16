@@ -6,7 +6,7 @@ ThemeData lightTheme = ThemeData(
       background: Color(0xFFF4F8FF),
       primary: Color(0xFF274688),
       secondary: Color(0xFFFFFFFF),
-      outline: Color(0xFFEAEAEA)),
+      outline: Color(0xFFBBBBBB)),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide(color: Color(0xFFBBBBBB)),
