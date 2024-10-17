@@ -35,7 +35,7 @@ migrate_working_dir/
 
 # Env
 *.env
-env.g.dart
+/lib/env/env.g.dartgit rm
 
 # Symbolication related
 app.*.symbols
