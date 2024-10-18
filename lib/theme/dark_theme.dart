@@ -33,11 +33,11 @@ ThemeData darkTheme = ThemeData(
   ),
   textTheme: TextTheme(
     bodySmall: TextStyle(
-      fontSize: 12,
+      fontSize: 14,
       color: Color(0xFF171F22),
     ),
     bodyMedium: TextStyle(
-      fontSize: 12,
+      fontSize: 14,
       color: Color(0xFFFFFFFF),
     ),
   ),

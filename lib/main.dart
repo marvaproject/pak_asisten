@@ -128,11 +128,11 @@ class _NavBarState extends State<NavBar> {
                 activeColor: Color(0xFF14274F),
                 inactiveColor: Color(0xFFF4F8FF),
                 activeIcon: Icon(
-                  Icons.nightlight_round,
+                  CustomIcon.moon,
                   color: Colors.amber,
                 ),
                 inactiveIcon: Icon(
-                  Icons.wb_sunny,
+                  CustomIcon.sun,
                   color: Colors.amber,
                 ),
                 onToggle: (value) {
