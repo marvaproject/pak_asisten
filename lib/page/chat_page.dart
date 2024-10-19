@@ -39,6 +39,7 @@ class _ChatPageState extends State<ChatPage> {
       onSend: _sendMessage,
       messages: messages.reversed.toList(),
       messageOptions: MessageOptions(
+        borderRadius: 20,
         showCurrentUserAvatar: false,
         showOtherUsersAvatar: false,
         showOtherUsersName: true,
@@ -242,8 +243,8 @@ class _ChatPageState extends State<ChatPage> {
                 tileColor: Theme.of(context).dialogBackgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
                 ),
                 onTap: () {
