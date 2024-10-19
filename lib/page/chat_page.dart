@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -20,7 +19,8 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessage> messages = [];
 
   ChatUser currentUser = ChatUser(id: "0", firstName: "User");
-  ChatUser geminiUser = ChatUser(id: "1", firstName: "Gemini", profileImage: null);
+  ChatUser geminiUser =
+      ChatUser(id: "1", firstName: "Gemini", profileImage: null);
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,40 @@ class _ChatPageState extends State<ChatPage> {
       messages: messages.reversed.toList(),
       messageOptions: MessageOptions(
         showCurrentUserAvatar: false,
-        textColor: Color(0xFF171F22),
-         
+        showOtherUsersAvatar: false,
+        showOtherUsersName: true,
+        currentUserContainerColor:
+            Theme.of(context).dialogTheme.backgroundColor,
+        containerColor: Theme.of(context).dialogBackgroundColor,
+        currentUserTextColor: Theme.of(context).textTheme.bodySmall?.color,
+        textColor:
+            Theme.of(context).textTheme.bodyMedium?.color ?? Colors.white,
+      ),
+      scrollToBottomOptions: ScrollToBottomOptions(
+        disabled: false,
+        scrollToBottomBuilder: (scrollController) => IconButton(
+          icon: Icon(
+            Icons.arrow_downward_rounded,
+            color: Theme.of(context).primaryIconTheme.color,
+            size: 15,
+          ),
+          onPressed: () {
+            scrollController.animateTo(
+              0,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          },
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.greenAccent),
+              shadowColor: MaterialStateProperty.all(Colors.black),
+              fixedSize: MaterialStateProperty.all(
+                Size(15, 15),
+              ),
+              alignment: Alignment.bottomCenter),
+          visualDensity: VisualDensity.standard,
+          alignment: Alignment.center,
+        ),
       ),
       inputOptions: InputOptions(
         alwaysShowSend: true,

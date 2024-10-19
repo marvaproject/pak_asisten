@@ -8,6 +8,8 @@ ThemeData darkTheme = ThemeData(
     secondary: Color(0xFFF4F8FF),
     outline: Color(0xFF274688),
   ),
+  dialogTheme: DialogTheme(backgroundColor: Color(0xFF274688),),
+  dialogBackgroundColor: Color(0xFF3D5891),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide(
@@ -17,6 +19,9 @@ ThemeData darkTheme = ThemeData(
   ),
   appBarTheme: AppBarTheme(
     backgroundColor: Color(0xFF14274F),
+  ),
+  primaryIconTheme: IconThemeData(
+    color: Color(0xFFF4F8FF),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: Color(0xFF274688),
@@ -34,9 +39,13 @@ ThemeData darkTheme = ThemeData(
   textTheme: TextTheme(
     bodySmall: TextStyle(
       fontSize: 14,
-      color: Color(0xFF171F22),
+      color: Color(0xFFFFFFFF),
     ),
     bodyMedium: TextStyle(
+      fontSize: 12,
+      color: Color(0xFFFFFFFF),
+    ),
+    displayMedium: TextStyle(
       fontSize: 14,
       color: Color(0xFFFFFFFF),
     ),

@@ -7,9 +7,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pak_asisten/env/env.dart';
 import 'package:pak_asisten/custom_class/theme_provider.dart';
 import 'package:pak_asisten/page/chat_page.dart';
-import 'package:pak_asisten/page/illustration_page.dart';
+import 'package:pak_asisten/page/translate_page.dart';
 import 'package:pak_asisten/page/image_page.dart';
-import 'package:pak_asisten/page/logo_page.dart';
+import 'package:pak_asisten/page/transcript_page.dart';
 import 'package:pak_asisten/page/scan_page.dart';
 import 'package:pak_asisten/theme/dark_theme.dart';
 import 'package:pak_asisten/theme/light_theme.dart';
@@ -190,8 +190,8 @@ class _NavBarState extends State<NavBar> {
                   GButton(icon: CustomIcon.chat, text: 'Chat'),
                   GButton(icon: CustomIcon.image, text: 'Image'),
                   GButton(icon: CustomIcon.scan, text: 'Scan'),
-                  GButton(icon: CustomIcon.logo, text: 'Logo'),
-                  GButton(icon: CustomIcon.illustration, text: 'Illustration'),
+                  GButton(icon: CustomIcon.transcript, text: 'Transcript'),
+                  GButton(icon: CustomIcon.translate, text: 'Translate'),
                 ],
                 selectedIndex: _selectedIndex,
                 onTabChange: (index) {

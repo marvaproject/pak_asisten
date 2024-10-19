@@ -5,9 +5,11 @@ ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.light(
     background: Color(0xFFF4F8FF),
     primary: Color(0xFF274688),
-    secondary: Color(0xFFFFFFFF),
+    secondary: Color(0xFFF4F8FF),
     outline: Color(0xFFBBBBBB),
   ),
+  dialogTheme: DialogTheme(backgroundColor: Color(0xFF274688),),
+  dialogBackgroundColor: Color(0xFFFFFFFF),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide(
@@ -17,6 +19,9 @@ ThemeData lightTheme = ThemeData(
   ),
   appBarTheme: AppBarTheme(
     backgroundColor: Color(0xFFF4F8FF),
+  ),
+  primaryIconTheme: IconThemeData(
+    color: Color(0xFF274688),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: Color(0xFFF4F8FF),
@@ -34,9 +39,13 @@ ThemeData lightTheme = ThemeData(
   textTheme: TextTheme(
     bodySmall: TextStyle(
       fontSize: 12,
-      color: Color(0xFF171F22),
+      color: Color(0xFFFFFFFF),
     ),
     bodyMedium: TextStyle(
+      fontSize: 12,
+      color: Color(0xFF171F22),
+    ),
+    displayMedium: TextStyle(
       fontSize: 12,
       color: Color(0xFFFFFFFF),
     ),
