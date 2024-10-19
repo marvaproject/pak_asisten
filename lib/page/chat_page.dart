@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -18,10 +19,20 @@ class _ChatPageState extends State<ChatPage> {
   final Gemini gemini = Gemini.instance;
 
   List<ChatMessage> messages = [];
+  final maxMessages = 50;
 
   ChatUser currentUser = ChatUser(id: "0", firstName: "User");
   ChatUser geminiUser =
       ChatUser(id: "1", firstName: "Gemini", profileImage: null);
+
+  XFile? _attachedImage;
+  String _inputText = '';
+  TextEditingController _textController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,14 +133,9 @@ class _ChatPageState extends State<ChatPage> {
           );
         },
         trailing: [
-          IconButton(
-            onPressed: _sendMediaMessage,
-            icon: Icon(CustomIcon.addimage),
-            color: Theme.of(context)
-                .bottomNavigationBarTheme
-                .unselectedIconTheme
-                ?.color,
-            visualDensity: VisualDensity.standard,
+          GestureDetector(
+            onTap: _attachImage,
+            child: _buildImagePreview(),
           ),
         ],
         inputDecoration: InputDecoration(
@@ -155,10 +161,47 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  Widget _buildImagePreview() {
+    if (_attachedImage != null) {
+      return Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          image: DecorationImage(
+            image: FileImage(File(_attachedImage!.path)),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      return Icon(
+        CustomIcon.addimage,
+        color: Theme.of(context)
+            .bottomNavigationBarTheme
+            .unselectedIconTheme
+            ?.color,
+      );
+    }
+  }
+
   void _sendMessage(ChatMessage chatMessage) {
+    if (_attachedImage != null) {
+      chatMessage.medias = [
+        ChatMedia(url: _attachedImage!.path, fileName: "", type: MediaType.image),
+      ];
+    }
+
     setState(() {
-      messages = [...messages, chatMessage];
+      messages.add(chatMessage);
+      if (messages.length > maxMessages) {
+        messages.removeAt(0);
+      }
+      _attachedImage = null;
+      _inputText = '';
+      _textController.clear();
     });
+
     try {
       String question = chatMessage.text;
       List<Uint8List>? images;
@@ -167,18 +210,17 @@ class _ChatPageState extends State<ChatPage> {
           File(chatMessage.medias!.first.url).readAsBytesSync(),
         ];
       }
-      String fullResponse = "";
       gemini.streamGenerateContent(question, images: images).listen(
         (event) {
-          ChatMessage? lastMassage = messages.firstOrNull;
-          if (lastMassage != null && lastMassage.user == geminiUser) {
-            lastMassage = messages.removeAt(0);
+          ChatMessage? lastMessage = messages.firstOrNull;
+          if (lastMessage != null && lastMessage.user == geminiUser) {
+            lastMessage = messages.removeAt(0);
             String response = event.content?.parts?.fold(
                     "", (previous, current) => "$previous ${current.text}") ??
                 "";
-            lastMassage.text += response;
+            lastMessage.text += response;
             setState(() {
-              messages = [lastMassage!, ...messages];
+              messages = [lastMessage!, ...messages];
             });
           } else {
             String response = event.content?.parts?.fold(
@@ -200,21 +242,17 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-// Kirim Pesan Gambar
-  void _sendMediaMessage() async {
+
+
+
+  void _attachImage() async {
     ImagePicker picker = ImagePicker();
     XFile? file = await picker.pickImage(source: ImageSource.gallery);
     if (file != null) {
-      ChatMessage chatMessage = ChatMessage(
-        user: currentUser,
-        createdAt: DateTime.now(),
-        medias: [
-          ChatMedia(url: file.path, fileName: "", type: MediaType.image),
-        ],
-      );
-      _sendMessage(chatMessage);
       setState(() {
-        messages = [...messages, chatMessage];
+        _attachedImage = file;
+        _textController.clear();
+        _inputText = '';
       });
     }
   }
@@ -262,3 +300,4 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
+
