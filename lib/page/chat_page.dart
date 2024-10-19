@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -47,6 +48,38 @@ class _ChatPageState extends State<ChatPage> {
         currentUserTextColor: Theme.of(context).textTheme.bodySmall?.color,
         textColor:
             Theme.of(context).textTheme.bodyMedium?.color ?? Colors.white,
+        messageTextBuilder: (message, previousMessage, nextMessage) {
+          return Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 24),
+                child: Text(
+                  message.text,
+                  style: TextStyle(
+                    color: message.user.id == currentUser.id
+                        ? Theme.of(context).textTheme.bodySmall?.color
+                        : Theme.of(context).textTheme.bodyMedium?.color ??
+                            Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    size: 16,
+                    color: Color(0xFFD1DBF2),
+                  ),
+                  onPressed: () => _showCopyOption(message.text),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                ),
+              ),
+            ],
+          );
+        },
       ),
       scrollToBottomOptions: ScrollToBottomOptions(
         disabled: false,
@@ -133,6 +166,7 @@ class _ChatPageState extends State<ChatPage> {
           File(chatMessage.medias!.first.url).readAsBytesSync(),
         ];
       }
+      String fullResponse = "";
       gemini.streamGenerateContent(question, images: images).listen(
         (event) {
           ChatMessage? lastMassage = messages.firstOrNull;
@@ -165,6 +199,7 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+// Kirim Pesan Gambar
   void _sendMediaMessage() async {
     ImagePicker picker = ImagePicker();
     XFile? file = await picker.pickImage(source: ImageSource.gallery);
@@ -181,5 +216,48 @@ class _ChatPageState extends State<ChatPage> {
         messages = [...messages, chatMessage];
       });
     }
+  }
+
+// Copy to Clipboard
+  void _showCopyOption(String text) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.copy,
+                  size: 20,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                ),
+                title: Text(
+                  'Copy to Clipboard',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
+                ),
+                tileColor: Theme.of(context).dialogBackgroundColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                ),
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: text));
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Copied to clipboard')),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
