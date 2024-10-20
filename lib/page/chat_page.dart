@@ -24,7 +24,6 @@ class _ChatPageState extends State<ChatPage> {
       ChatUser(id: "1", firstName: "Gemini", profileImage: null);
 
   XFile? _attachedImage;
-  String _inputText = '';
   TextEditingController _textController = TextEditingController();
 
   @override
@@ -192,7 +191,6 @@ class _ChatPageState extends State<ChatPage> {
         messages.removeAt(0);
       }
       _attachedImage = null;
-      _inputText = '';
       _textController.clear();
     });
 
@@ -243,7 +241,6 @@ class _ChatPageState extends State<ChatPage> {
       setState(() {
         _attachedImage = file;
         _textController.clear();
-        _inputText = '';
       });
     }
   }
@@ -257,8 +254,9 @@ class _ChatPageState extends State<ChatPage> {
           child: Wrap(
             children: <Widget>[
               ListTile(
+                horizontalTitleGap: 8,
                 leading: Icon(
-                  Icons.copy,
+                  CustomIcon.clipboard,
                   size: 20,
                   color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),

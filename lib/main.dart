@@ -193,7 +193,7 @@ class _NavBarState extends State<NavBar> {
                 tabs: const [
                   GButton(icon: CustomIcon.chat, text: 'Chat'),
                   GButton(icon: CustomIcon.image, text: 'Image'),
-                  GButton(icon: CustomIcon.scan, text: 'Scan'),
+                  GButton(icon: CustomIcon.scan, text: 'Scan Text'),
                   GButton(icon: CustomIcon.transcript, text: 'Transcript'),
                   GButton(icon: CustomIcon.translate, text: 'Translate'),
                 ],

@@ -16,14 +16,14 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: MaterialStateProperty.all(Color(0xFF274688)),
       textStyle: MaterialStateProperty.all(
         TextStyle(
-          fontSize: 14,
+          fontSize: 15,
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
       ),
       alignment: Alignment.center,
       padding: MaterialStateProperty.all(
-        EdgeInsets.symmetric(vertical: 20),
+        EdgeInsets.symmetric(vertical: 15),
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
@@ -41,13 +41,13 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: MaterialStateProperty.all(Colors.white),
       textStyle: MaterialStateProperty.all(
         TextStyle(
-          fontSize: 14,
+          fontSize: 15,
           color: Color(0xFF274688),
           fontWeight: FontWeight.bold,
         ),
       ),
       alignment: Alignment.center,
-      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
+      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 15)),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),

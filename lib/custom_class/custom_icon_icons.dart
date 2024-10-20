@@ -33,5 +33,6 @@ class CustomIcon {
   static const IconData share = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData sun = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData transcript = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData clipboard = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData translate = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

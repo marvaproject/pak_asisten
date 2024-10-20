@@ -15,14 +15,14 @@ ThemeData darkTheme = ThemeData(
       backgroundColor: MaterialStateProperty.all(Color(0xFF274688)),
       textStyle: MaterialStateProperty.all(
         TextStyle(
-          fontSize: 14,
+          fontSize: 15,
           color: Color(0xFFF4F8FF),
           fontWeight: FontWeight.bold,
         ),
       ),
       alignment: Alignment.center,
       padding: MaterialStateProperty.all(
-        EdgeInsets.symmetric(vertical: 20),
+        EdgeInsets.symmetric(vertical: 15),
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
@@ -40,13 +40,13 @@ ThemeData darkTheme = ThemeData(
       backgroundColor: MaterialStateProperty.all(Color(0xFFF4F8FF)),
       textStyle: MaterialStateProperty.all(
         TextStyle(
-          fontSize: 14,
+          fontSize: 15,
           color: Color(0xFF274688),
           fontWeight: FontWeight.bold,
         ),
       ),
       alignment: Alignment.center,
-      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
+      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 15)),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),
