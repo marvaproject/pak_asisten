@@ -1,6 +1,5 @@
-platform :ios, '15.5.0'
-
-$iOSVersion = '15.5.0'
+platform :ios, '15.5'
+$iOSVersion = '15.5'
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
@@ -38,21 +37,17 @@ target 'Runner' do
 end
 
 post_install do |installer|
-  # add these lines:
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-  end
-
   installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-
-    # add these lines:
     target.build_configurations.each do |config|
-      if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-      end
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
+      config.build_settings['SWIFT_VERSION'] = '5.0'
+      
+      # Hapus arsitektur 32-bit
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'i386 armv7'
+      
+      # Aktifkan arm64 untuk simulator
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
+      config.build_settings['VALID_ARCHS'] = 'arm64 arm64e x86_64'
     end
-
   end
 end
