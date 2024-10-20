@@ -8,12 +8,66 @@ ThemeData darkTheme = ThemeData(
     secondary: Color(0xFFF4F8FF),
     outline: Color(0xFF274688),
   ),
-  dialogTheme: DialogTheme(backgroundColor: Color(0xFF274688),),
+  filledButtonTheme: FilledButtonThemeData(
+    style: ButtonStyle(
+      iconColor: MaterialStateProperty.all(Color(0xFFF4F8FF)),
+      iconSize: MaterialStateProperty.all(16),
+      backgroundColor: MaterialStateProperty.all(Color(0xFF274688)),
+      textStyle: MaterialStateProperty.all(
+        TextStyle(
+          fontSize: 14,
+          color: Color(0xFFF4F8FF),
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      alignment: Alignment.center,
+      padding: MaterialStateProperty.all(
+        EdgeInsets.symmetric(vertical: 20),
+      ),
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+        ),
+      ),
+      shadowColor: MaterialStateProperty.all(Color(0x4C274688)),
+      elevation: MaterialStateProperty.all(8),
+    ),
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      iconColor: MaterialStateProperty.all(Color(0xFF274688)),
+      iconSize: MaterialStateProperty.all(16),
+      backgroundColor: MaterialStateProperty.all(Color(0xFFF4F8FF)),
+      textStyle: MaterialStateProperty.all(
+        TextStyle(
+          fontSize: 14,
+          color: Color(0xFF274688),
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      alignment: Alignment.center,
+      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          side: BorderSide(
+              color: Color(0xFF274688), width: 1, style: BorderStyle.solid),
+        ),
+      ),
+      shadowColor: MaterialStateProperty.all(Color(0x4C274688)),
+      elevation: MaterialStateProperty.all(8),
+    ),
+  ),
+  dialogTheme: DialogTheme(
+    backgroundColor: Color(0xFF274688),
+  ),
   dialogBackgroundColor: Color(0xFF3D5891),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide(
         color: Color(0xFFBBBBBB),
+        width: 1,
+        style: BorderStyle.solid,
       ),
     ),
   ),
@@ -46,8 +100,7 @@ ThemeData darkTheme = ThemeData(
       color: Color(0xFFFFFFFF),
     ),
     displayMedium: TextStyle(
-      fontSize: 14,
-      color: Color(0xFFFFFFFF),
+      color: Color(0xFFF4F8FF),
     ),
   ),
 );

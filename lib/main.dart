@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -35,20 +36,21 @@ class PakAsisten extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        themeMode:
-            themeProvider.themeMode, // Menggunakan tema dari ThemeProvider
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        home: AnimatedSplashScreen(
-          //Splash Screen
-          splash: 'assets/logo/LogoSplashScreen.gif',
-          splashIconSize: 300,
-          nextScreen: const NavBar(),
-          duration: 2800,
-          splashTransition: SplashTransition.fadeTransition,
-          backgroundColor: Color.fromARGB(255, 13, 28, 58),
-        ));
+      debugShowCheckedModeBanner: false,
+      themeMode: themeProvider.themeMode, // Menggunakan tema dari ThemeProvider
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      home: NavBar(),
+      // home: AnimatedSplashScreen(
+      //   //Splash Screen
+      //   splash: 'assets/logo/LogoSplashScreen.gif',
+      //   splashIconSize: 300,
+      //   nextScreen: const NavBar(),
+      //   duration: 2800,
+      //   splashTransition: SplashTransition.fadeTransition,
+      //   backgroundColor: Color.fromARGB(255, 13, 28, 58),
+      // ),
+    );
   }
 }
 
@@ -94,58 +96,60 @@ class _NavBarState extends State<NavBar> {
           // App Bar
           elevation: 0,
           shape: Border(
-            bottom: BorderSide(color: Theme.of(context).colorScheme.outline, width: 0.5),
+            bottom: BorderSide(
+                color: Theme.of(context).colorScheme.outline, width: 0.5),
           ),
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           title: Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: 10),
-            child:
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              SvgPicture.asset(
-                'assets/logo/LightLogoAppBar.svg',
-                width: 150,
-                color: isDarkMode ? Colors.white : null,
-              ),
-              FlutterSwitch(
-                // Switch Button Dark Mode
-                width: 50,
-                height: 30,
-                toggleSize: 28,
-                value: themeProvider.themeMode == ThemeMode.dark,
-                borderRadius: 30,
-                padding: 2,
-                activeToggleColor: Color(0xFF274688),
-                inactiveToggleColor: Color(0xFF14274F),
-                activeSwitchBorder: Border.all(
-                  color: Color(0xFF274688),
-                  width: 2,
-                ),
-                inactiveSwitchBorder: Border.all(
-                  color: Color(0xFF14274F),
-                  width: 2,
-                ),
-                activeColor: Color(0xFF14274F),
-                inactiveColor: Color(0xFFF4F8FF),
-                activeIcon: Icon(
-                  CustomIcon.moon,
-                  color: Colors.amber,
-                ),
-                inactiveIcon: Icon(
-                  CustomIcon.sun,
-                  color: Colors.amber,
-                ),
-                onToggle: (value) {
-                  themeProvider
-                      .toggleTheme(); // Memanggil fungsi untuk mengubah tema
-                },
-              )
-            ]),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset(
+                    'assets/logo/LightLogoAppBar.svg',
+                    width: 150,
+                    color: isDarkMode ? Colors.white : null,
+                  ),
+                  FlutterSwitch(
+                    // Switch Button Dark Mode
+                    width: 50,
+                    height: 30,
+                    toggleSize: 28,
+                    value: themeProvider.themeMode == ThemeMode.dark,
+                    borderRadius: 30,
+                    padding: 2,
+                    activeToggleColor: Color(0xFF274688),
+                    inactiveToggleColor: Color(0xFF14274F),
+                    activeSwitchBorder: Border.all(
+                      color: Color(0xFF274688),
+                      width: 2,
+                    ),
+                    inactiveSwitchBorder: Border.all(
+                      color: Color(0xFF14274F),
+                      width: 2,
+                    ),
+                    activeColor: Color(0xFF14274F),
+                    inactiveColor: Color(0xFFF4F8FF),
+                    activeIcon: Icon(
+                      CustomIcon.moon,
+                      color: Colors.amber,
+                    ),
+                    inactiveIcon: Icon(
+                      CustomIcon.sun,
+                      color: Colors.amber,
+                    ),
+                    onToggle: (value) {
+                      themeProvider
+                          .toggleTheme(); // Memanggil fungsi untuk mengubah tema
+                    },
+                  )
+                ]),
           ),
         ),
         body: Container(
-        child: _widgetOptions[_selectedIndex],
-      ),
+          child: _widgetOptions[_selectedIndex],
+        ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
@@ -195,9 +199,9 @@ class _NavBarState extends State<NavBar> {
                 ],
                 selectedIndex: _selectedIndex,
                 onTabChange: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
+                  setState(() {
+                    _selectedIndex = index;
+                  });
                 },
               ),
             ),

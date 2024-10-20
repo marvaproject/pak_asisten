@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -121,6 +119,9 @@ class _ChatPageState extends State<ChatPage> {
       ),
       inputOptions: InputOptions(
         alwaysShowSend: true,
+        inputMaxLines: 5,
+        inputToolbarPadding: EdgeInsets.only(bottom: 15),
+        inputToolbarMargin: EdgeInsets.only(top: 15),
         sendButtonBuilder: (onSend) {
           return IconButton(
             icon: Icon(CustomIcon.send),
@@ -139,19 +140,11 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
         inputDecoration: InputDecoration(
-          hintText: "Type a prompt...",
+          hintText: "Chat with Gemini...",
           hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context)
-                  .inputDecorationTheme
-                  .border!
-                  .borderSide
-                  .color,
-              width: 0.5,
-              style: BorderStyle.solid,
-            ),
+            borderSide: Theme.of(context).inputDecorationTheme.border!.borderSide,
             borderRadius: BorderRadius.all(
               Radius.circular(30),
             ),
@@ -188,7 +181,8 @@ class _ChatPageState extends State<ChatPage> {
   void _sendMessage(ChatMessage chatMessage) {
     if (_attachedImage != null) {
       chatMessage.medias = [
-        ChatMedia(url: _attachedImage!.path, fileName: "", type: MediaType.image),
+        ChatMedia(
+            url: _attachedImage!.path, fileName: "", type: MediaType.image),
       ];
     }
 
@@ -242,9 +236,6 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-
-
-
   void _attachImage() async {
     ImagePicker picker = ImagePicker();
     XFile? file = await picker.pickImage(source: ImageSource.gallery);
@@ -285,11 +276,22 @@ class _ChatPageState extends State<ChatPage> {
                     topRight: Radius.circular(20),
                   ),
                 ),
+                contentPadding: EdgeInsets.only(bottom: 15, left: 15, right: 15),
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: text));
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Copied to clipboard')),
+                    SnackBar(
+                      content: Text(
+                        'Copied to clipboard',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
+                        ),
+                      ),
+                      backgroundColor: Theme.of(context).dialogBackgroundColor,
+                      duration: Duration(milliseconds: 700),
+                    ),
                   );
                 },
               ),
@@ -300,4 +302,3 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
-
