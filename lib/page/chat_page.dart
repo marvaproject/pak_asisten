@@ -24,7 +24,7 @@ class _ChatPageState extends State<ChatPage> {
       ChatUser(id: "1", firstName: "Gemini", profileImage: null);
 
   XFile? _attachedImage;
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ChatPageState extends State<ChatPage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration:
-          BoxDecoration(color: Theme.of(context).colorScheme.background),
+          BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: _buildUI(),
     );
   }
@@ -58,17 +58,25 @@ class _ChatPageState extends State<ChatPage> {
         textColor:
             Theme.of(context).textTheme.bodyMedium?.color ?? Colors.white,
         messageTextBuilder: (message, previousMessage, nextMessage) {
+          if (message.customProperties?['isLoading'] == true) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          String parsedText = parseMarkdown(message.text);
+
           return Stack(
             children: [
               Padding(
                 padding: EdgeInsets.only(right: 24),
-                child: Text(
-                  message.text,
-                  style: TextStyle(
-                    color: message.user.id == currentUser.id
-                        ? Theme.of(context).textTheme.bodySmall?.color
-                        : Theme.of(context).textTheme.bodyMedium?.color ??
-                            Colors.white,
+                child: RichText(
+                  text: TextSpan(
+                    children: _buildTextSpans(parsedText),
+                    style: TextStyle(
+                      color: message.user.id == currentUser.id
+                          ? Theme.of(context).textTheme.bodySmall?.color
+                          : Theme.of(context).textTheme.bodyMedium?.color ??
+                              Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -92,28 +100,39 @@ class _ChatPageState extends State<ChatPage> {
       ),
       scrollToBottomOptions: ScrollToBottomOptions(
         disabled: false,
-        scrollToBottomBuilder: (scrollController) => IconButton(
-          icon: Icon(
-            Icons.arrow_downward_rounded,
-            color: Theme.of(context).primaryIconTheme.color,
-            size: 15,
-          ),
-          onPressed: () {
-            scrollController.animateTo(
-              0,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-            );
-          },
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.greenAccent),
-              shadowColor: MaterialStateProperty.all(Colors.black),
-              fixedSize: MaterialStateProperty.all(
-                Size(15, 15),
+        scrollToBottomBuilder: (scrollController) => Positioned(
+          bottom: 15,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: SizedBox(
+              height: 25,
+              width: 25,
+              child: FloatingActionButton(
+                mini: true,
+                shape: CircleBorder(
+                  side: BorderSide(
+                      color: Color(0xFF274688),
+                      width: 1,
+                      style: BorderStyle.solid),
+                ),
+                backgroundColor: Colors.white,
+                onPressed: () {
+                  scrollController.animateTo(
+                    0,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                },
+                elevation: 5,
+                child: Icon(
+                  Icons.arrow_downward,
+                  color: Color(0xFF274688),
+                  size: 16,
+                ),
               ),
-              alignment: Alignment.bottomCenter),
-          visualDensity: VisualDensity.standard,
-          alignment: Alignment.center,
+            ),
+          ),
         ),
       ),
       inputOptions: InputOptions(
@@ -143,7 +162,8 @@ class _ChatPageState extends State<ChatPage> {
           hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           border: OutlineInputBorder(
-            borderSide: Theme.of(context).inputDecorationTheme.border!.borderSide,
+            borderSide:
+                Theme.of(context).inputDecorationTheme.border!.borderSide,
             borderRadius: BorderRadius.all(
               Radius.circular(30),
             ),
@@ -192,6 +212,15 @@ class _ChatPageState extends State<ChatPage> {
       }
       _attachedImage = null;
       _textController.clear();
+
+      messages.add(ChatMessage(
+        user: geminiUser,
+        createdAt: DateTime.now(),
+        text: "",
+        customProperties: {
+          'isLoading': true,
+        },
+      ));
     });
 
     try {
@@ -202,35 +231,52 @@ class _ChatPageState extends State<ChatPage> {
           File(chatMessage.medias!.first.url).readAsBytesSync(),
         ];
       }
+
+      String fullResponse = "";
       gemini.streamGenerateContent(question, images: images).listen(
         (event) {
-          ChatMessage? lastMessage = messages.firstOrNull;
-          if (lastMessage != null && lastMessage.user == geminiUser) {
-            lastMessage = messages.removeAt(0);
-            String response = event.content?.parts?.fold(
-                    "", (previous, current) => "$previous ${current.text}") ??
-                "";
-            lastMessage.text += response;
-            setState(() {
-              messages = [lastMessage!, ...messages];
-            });
-          } else {
-            String response = event.content?.parts?.fold(
-                    "", (previous, current) => "$previous ${current.text}") ??
-                "";
-            ChatMessage message = ChatMessage(
+          String response = event.content?.parts?.fold(
+                  "", (previous, current) => "$previous ${current.text}") ??
+              "";
+          fullResponse += response;
+
+          setState(() {
+            messages.last = ChatMessage(
               user: geminiUser,
               createdAt: DateTime.now(),
-              text: response,
+              text: fullResponse,
+              customProperties: {
+                'isLoading': false,
+              },
             );
-            setState(() {
-              messages = [...messages, message];
-            });
-          }
+          });
+        },
+        onError: (error) {
+          // Handle error
+          setState(() {
+            messages.last = ChatMessage(
+              user: geminiUser,
+              createdAt: DateTime.now(),
+              text: "Sorry, an error occurred.",
+              customProperties: {
+                'isLoading': false,
+              },
+            );
+          });
         },
       );
     } catch (e) {
-      print(e);
+      // Handle error
+      setState(() {
+        messages.last = ChatMessage(
+          user: geminiUser,
+          createdAt: DateTime.now(),
+          text: "Sorry, an error occurred.",
+          customProperties: {
+            'isLoading': false,
+          },
+        );
+      });
     }
   }
 
@@ -243,6 +289,75 @@ class _ChatPageState extends State<ChatPage> {
         _textController.clear();
       });
     }
+  }
+
+  String parseMarkdown(String text) {
+    // Bold
+    text = text.replaceAllMapped(RegExp(r'\*\*(.*?)\*\*'), (match) {
+      return '<b>${match.group(1)}</b>';
+    });
+
+    // Italic
+    text = text.replaceAllMapped(RegExp(r'\*(.*?)\*'), (match) {
+      return '<i>${match.group(1)}</i>';
+    });
+
+    // Strikethrough
+    text = text.replaceAllMapped(RegExp(r'~~(.*?)~~'), (match) {
+      return '<s>${match.group(1)}</s>';
+    });
+
+    // List items
+    text = text.replaceAllMapped(
+        RegExp(r'^[ \t]*\*[ \t](.+)$', multiLine: true), (match) {
+      return '<li>${match.group(1)}</li>';
+    });
+
+    return text;
+  }
+
+  List<TextSpan> _buildTextSpans(String text) {
+    List<TextSpan> spans = [];
+    RegExp exp = RegExp(
+        r'<(\w+)(?:\s+[^>]*)?>(((?!<\1[^>]*>).)*?)</\1>|([^<]+)',
+        dotAll: true);
+
+    exp.allMatches(text).forEach((match) {
+      if (match.group(4) != null) {
+        // Plain text
+        spans.add(TextSpan(text: match.group(4)));
+      } else {
+        // Formatted text
+        String tag = match.group(1)!;
+        String content = match.group(2)!;
+
+        switch (tag.toLowerCase()) {
+          case 'b':
+          case 'strong':
+            spans.add(TextSpan(
+                text: content, style: TextStyle(fontWeight: FontWeight.bold)));
+            break;
+          case 'i':
+          case 'em':
+            spans.add(TextSpan(
+                text: content, style: TextStyle(fontStyle: FontStyle.italic)));
+            break;
+          case 's':
+          case 'strike':
+            spans.add(TextSpan(
+                text: content,
+                style: TextStyle(decoration: TextDecoration.lineThrough)));
+            break;
+          case 'li':
+            spans.add(TextSpan(text: "• $content\n"));
+            break;
+          default:
+            spans.add(TextSpan(text: content));
+        }
+      }
+    });
+
+    return spans;
   }
 
 // Copy to Clipboard
@@ -274,7 +389,8 @@ class _ChatPageState extends State<ChatPage> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                contentPadding: EdgeInsets.only(bottom: 15, left: 15, right: 15),
+                contentPadding:
+                    EdgeInsets.only(bottom: 15, left: 15, right: 15),
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: text));
                   Navigator.pop(context);

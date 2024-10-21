@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:pak_asisten/custom_class/flux_service.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,7 +8,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 class ImagePage extends StatefulWidget {
-  const ImagePage({Key? key}) : super(key: key);
+  const ImagePage({super.key});
 
   @override
   State<ImagePage> createState() => _ImagePageState();
@@ -37,16 +37,16 @@ class _ImagePageState extends State<ImagePage> {
     });
   }
 
-  Future<void> _downloadImage() async {
-    if (_generatedImage != null) {
-      final result = await ImageGallerySaver.saveImage(_generatedImage!);
-      if (result['isSuccess']) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Image saved to gallery')),
-        );
-      }
-    }
-  }
+  // Future<void> _downloadImage() async {
+  //   if (_generatedImage != null) {
+  //     final result = await ImageGallerySaver.saveImage(_generatedImage!);
+  //     if (result['isSuccess']) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Image saved to gallery')),
+  //       );
+  //     }
+  //   }
+  // }
 
   Future<void> _shareImage() async {
     if (_generatedImage != null) {
@@ -62,7 +62,7 @@ class _ImagePageState extends State<ImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: EdgeInsets.all(15),
         child: Column(
@@ -81,7 +81,7 @@ class _ImagePageState extends State<ImagePage> {
                           )
                         : null,
                     color: _generatedImage == null
-                        ? Theme.of(context).colorScheme.background
+                        ? Theme.of(context).colorScheme.surface
                         : null,
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
@@ -103,7 +103,7 @@ class _ImagePageState extends State<ImagePage> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: _downloadImage,
+                      onPressed: (){},
                       label: Text("Download",
                           style: TextStyle(
                               color: Theme.of(context)

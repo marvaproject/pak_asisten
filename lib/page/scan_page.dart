@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,7 +47,6 @@ class _ScanPageState extends State<ScanPage> {
       });
       _hasText.value = _textController.text.isNotEmpty; // Tambahkan ini
     } catch (e) {
-      print("Error recognizing text: $e");
       setState(() {
         _isProcessing = false;
       });
@@ -93,7 +94,7 @@ class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -113,7 +114,7 @@ class _ScanPageState extends State<ScanPage> {
                             )
                           : null,
                       color: _image == null
-                          ? Theme.of(context).colorScheme.background
+                          ? Theme.of(context).colorScheme.surface
                           : null,
                       borderRadius: BorderRadius.circular(25),
                       border: Border.all(
