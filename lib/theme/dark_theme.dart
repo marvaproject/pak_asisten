@@ -22,7 +22,7 @@ ThemeData darkTheme = ThemeData(
       ),
       alignment: Alignment.center,
       padding: MaterialStateProperty.all(
-        EdgeInsets.symmetric(vertical: 15),
+        EdgeInsets.symmetric(vertical: 20),
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
@@ -46,7 +46,7 @@ ThemeData darkTheme = ThemeData(
         ),
       ),
       alignment: Alignment.center,
-      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 15)),
+      padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),

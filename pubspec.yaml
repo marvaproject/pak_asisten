@@ -45,6 +45,11 @@ dependencies:
   envied: ^0.5.4+1
   google_mlkit_text_recognition: ^0.14.0
   shared_preferences: ^2.3.2
+  http: ^1.2.2
+  image_gallery_saver: ^2.0.3
+  path_provider: ^2.1.4
+  share_plus: ^10.1.0
+  dio: ^5.7.0
 
 dev_dependencies:
   flutter_test:

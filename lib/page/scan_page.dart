@@ -17,6 +17,7 @@ class _ScanPageState extends State<ScanPage> {
   final TextRecognizer _textRecognizer = TextRecognizer();
   final TextEditingController _textController = TextEditingController();
   bool _isProcessing = false;
+  final ValueNotifier<bool> _hasText = ValueNotifier<bool>(false);
 
   Future<void> _getImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -42,13 +43,24 @@ class _ScanPageState extends State<ScanPage> {
         _textController.text = recognizedText.text;
         _isProcessing = false;
       });
+      _hasText.value = _textController.text.isNotEmpty; // Tambahkan ini
     } catch (e) {
       print("Error recognizing text: $e");
       setState(() {
         _isProcessing = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error recognizing text')),
+        SnackBar(
+          content: Text(
+            'Error recognizing text',
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+          ),
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
+          duration: Duration(milliseconds: 700),
+        ),
       );
     }
   }
@@ -74,12 +86,14 @@ class _ScanPageState extends State<ScanPage> {
   void dispose() {
     _textRecognizer.close();
     _textController.dispose();
+    _hasText.dispose(); // Tambahkan ini
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -88,8 +102,9 @@ class _ScanPageState extends State<ScanPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: 1,
+                  aspectRatio: 4 / 3,
                   child: Container(
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       image: _image != null
                           ? DecorationImage(
@@ -97,14 +112,27 @@ class _ScanPageState extends State<ScanPage> {
                               fit: BoxFit.cover,
                             )
                           : null,
-                      color: _image == null ? Theme.of(context).colorScheme.background : null,
-                      borderRadius: BorderRadius.circular(40),
+                      color: _image == null
+                          ? Theme.of(context).colorScheme.background
+                          : null,
+                      borderRadius: BorderRadius.circular(25),
                       border: Border.all(
                         style: BorderStyle.solid,
                         color: Theme.of(context).colorScheme.outline,
                         width: 1,
                       ),
                     ),
+                    child: _image == null
+                        ? Text(
+                            "Image not selected",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.outline,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        : null,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -140,25 +168,38 @@ class _ScanPageState extends State<ScanPage> {
                 SizedBox(height: 20),
                 TextField(
                   controller: _textController,
-                  maxLines: 3, // Allows the TextField to expand
+                  maxLines: 3,
+                  onChanged: (text) {
+                    _hasText.value = text.isNotEmpty; // Tambahkan ini
+                  },
                   decoration: InputDecoration(
                     hintText: "Recognized Text Result...",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                     contentPadding: EdgeInsets.all(20),
                     border: OutlineInputBorder(
-                      borderSide:
-                          Theme.of(context).inputDecorationTheme.border!.borderSide,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(25),
-                      ),
+                      borderSide: Theme.of(context)
+                          .inputDecorationTheme
+                          .border!
+                          .borderSide,
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
                     ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        CustomIcon.clipboard,
-                        size: 20,
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                      ),
-                      onPressed: _copyToClipboard,
+                    suffixIcon: ValueListenableBuilder<bool>(
+                      valueListenable: _hasText,
+                      builder: (context, hasText, child) {
+                        return hasText
+                            ? IconButton(
+                                icon: Icon(
+                                  CustomIcon.clipboard,
+                                  size: 20,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color,
+                                ),
+                                onPressed: _copyToClipboard,
+                              )
+                            : SizedBox.shrink();
+                      },
                     ),
                   ),
                 ),
@@ -174,7 +215,10 @@ class _ScanPageState extends State<ScanPage> {
                           : Text(
                               "Generate",
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.displayMedium?.color,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.color,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
