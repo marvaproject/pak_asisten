@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class IllustrationPage extends StatefulWidget {
-  const IllustrationPage({super.key});
+class QuizPage extends StatefulWidget {
+  const QuizPage({super.key});
 
   @override
-  State<IllustrationPage> createState() => _IllustrationPageState();
+  State<QuizPage> createState() => _QuizPageState();
 }
 
-class _IllustrationPageState extends State<IllustrationPage> {
+class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class _IllustrationPageState extends State<IllustrationPage> {
         padding: EdgeInsets.all(16),
         alignment: Alignment.center,
         child: Text(
-          'Ini halaman Illustration Generator',
+          'Ini halaman Logo Generator',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,

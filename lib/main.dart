@@ -6,9 +6,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pak_asisten/env/env.dart';
 import 'package:pak_asisten/custom_class/theme_provider.dart';
 import 'package:pak_asisten/page/chat_page.dart';
-import 'package:pak_asisten/page/translate_page.dart';
+import 'package:pak_asisten/page/reword_page.dart';
 import 'package:pak_asisten/page/image_page.dart';
-import 'package:pak_asisten/page/transcript_page.dart';
+import 'package:pak_asisten/page/quiz_page.dart';
 import 'package:pak_asisten/page/scan_page.dart';
 import 'package:pak_asisten/theme/dark_theme.dart';
 import 'package:pak_asisten/theme/light_theme.dart';
@@ -68,8 +68,8 @@ class _NavBarState extends State<NavBar> {
     ChatPage(),
     ImagePage(),
     ScanPage(),
-    LogoPage(),
-    IllustrationPage(),
+    QuizPage(),
+    RewordPage(),
   ];
 
   @override

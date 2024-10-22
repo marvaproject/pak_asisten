@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -29,14 +31,15 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    loadMessages();
+    clearOldMessages();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
-      decoration:
-          BoxDecoration(color: Theme.of(context).colorScheme.surface),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: _buildUI(),
     );
   }
@@ -358,6 +361,49 @@ class _ChatPageState extends State<ChatPage> {
     });
 
     return spans;
+  }
+
+  Future<void> saveMessages() async {
+    final prefs = await SharedPreferences.getInstance();
+    final messagesToSave = messages
+        .map((msg) => {
+              'text': msg.text,
+              'createdAt': msg.createdAt.toIso8601String(),
+              'userId': msg.user.id,
+              // Tambahkan properti lain yang perlu disimpan
+            })
+        .toList();
+    await prefs.setString('chat_messages', jsonEncode(messagesToSave));
+  }
+
+  Future<void> loadMessages() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? savedMessages = prefs.getString('chat_messages');
+    if (savedMessages != null) {
+      final List<dynamic> decodedMessages = jsonDecode(savedMessages);
+      setState(() {
+        messages = decodedMessages
+            .map((msgMap) => ChatMessage(
+                  text: msgMap['text'],
+                  createdAt: DateTime.parse(msgMap['createdAt']),
+                  user: msgMap['userId'] == currentUser.id
+                      ? currentUser
+                      : geminiUser,
+                  // Sesuaikan dengan properti lain yang Anda simpan
+                ))
+            .toList();
+      });
+    }
+  }
+
+  Future<void> clearOldMessages() async {
+    final now = DateTime.now();
+    setState(() {
+      messages = messages
+          .where((msg) => now.difference(msg.createdAt) < Duration(hours: 24))
+          .toList();
+    });
+    await saveMessages();
   }
 
 // Copy to Clipboard

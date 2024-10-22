@@ -7,6 +7,8 @@ ThemeData darkTheme = ThemeData(
     primary: Color(0xFF274688),
     secondary: Color(0xFFF4F8FF),
     outline: Color(0xFF274688),
+    outlineVariant: Color(0xFFBBBBBB),
+    inverseSurface: Color(0xFF14274F)
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(

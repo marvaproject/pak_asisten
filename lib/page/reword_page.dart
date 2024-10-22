@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LogoPage extends StatefulWidget {
-  const LogoPage({super.key});
+class RewordPage extends StatefulWidget {
+  const RewordPage({super.key});
 
   @override
-  State<LogoPage> createState() => _LogoPageState();
+  State<RewordPage> createState() => _RewordPageState();
 }
 
-class _LogoPageState extends State<LogoPage> {
+class _RewordPageState extends State<RewordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class _LogoPageState extends State<LogoPage> {
         padding: EdgeInsets.all(16),
         alignment: Alignment.center,
         child: Text(
-          'Ini halaman Logo Generator',
+          'Ini halaman Illustration Generator',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
