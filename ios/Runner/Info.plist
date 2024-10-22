@@ -48,5 +48,7 @@
 		<string>This app needs camera access to scan text</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs photo library access to get images for text recognition</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Aplikasi ini memerlukan akses untuk menyimpan gambar ke galeri foto Anda.</string>
 	</dict>
 </plist>

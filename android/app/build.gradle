@@ -30,7 +30,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.pak_asisten"
+    namespace 'com.example.pak_asisten'
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -48,7 +48,6 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.pak_asisten"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
@@ -64,6 +63,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    
 
     configurations.all {
         resolutionStrategy {
@@ -98,4 +98,5 @@ dependencies {
 
     // ML Kit Text Recognition
     implementation 'com.google.mlkit:text-recognition:16.0.0'
+
 }

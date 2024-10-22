@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:gal/gal.dart';
+import 'package:intl/intl.dart';
 import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:pak_asisten/custom_class/flux_service.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,16 +40,56 @@ class _ImagePageState extends State<ImagePage> {
     });
   }
 
-  // Future<void> _downloadImage() async {
-  //   if (_generatedImage != null) {
-  //     final result = await ImageGallerySaver.saveImage(_generatedImage!);
-  //     if (result['isSuccess']) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Image saved to gallery')),
-  //       );
-  //     }
-  //   }
-  // }
+  Future<void> _downloadImage() async {
+    if (_generatedImage != null) {
+      await saveImageToGallery(context, _generatedImage!);
+    }
+  }
+
+  Future<void> saveImageToGallery(
+      BuildContext context, Uint8List imageBytes) async {
+    try {
+      // Buat nama file dengan format yang diinginkan
+      final now = DateTime.now();
+      final formatter = DateFormat('yyyyMMdd_HHmmss');
+      final String fileName =
+          'Pak Asisten Image Generation_${formatter.format(now)}.png';
+
+      // Buat file temporary dengan nama yang baru
+      final tempDir = await getTemporaryDirectory();
+      final file = await File('${tempDir.path}/$fileName').create();
+      await file.writeAsBytes(imageBytes);
+
+      // Simpan gambar menggunakan gal
+      await Gal.putImage(file.path,
+          album: "Image Generation from Pak Asisiten");
+
+      // Hapus file temporary
+      await file.delete();
+
+      // Pemberitahuan sukses
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Image saved to gallery',
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+          ),
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to save image: $e'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+    }
+  }
 
   Future<void> _shareImage() async {
     if (_generatedImage != null) {
@@ -103,7 +146,7 @@ class _ImagePageState extends State<ImagePage> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: (){},
+                      onPressed: _downloadImage,
                       label: Text("Download",
                           style: TextStyle(
                               color: Theme.of(context)
