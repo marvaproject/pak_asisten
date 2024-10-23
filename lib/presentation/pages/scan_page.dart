@@ -1,7 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:pak_asisten/presentation/widgets/custom_icon_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:io';
@@ -16,26 +17,52 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> {
   File? _image;
-  final TextRecognizer _textRecognizer = TextRecognizer();
+  late final TextRecognizer _textRecognizer;
   final TextEditingController _textController = TextEditingController();
   bool _isProcessing = false;
+  bool _isImageLoading = false;
   final ValueNotifier<bool> _hasText = ValueNotifier<bool>(false);
 
+  @override
+  void initState() {
+    super.initState();
+    _textRecognizer = TextRecognizer();
+  }
+
   Future<void> _getImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
+    try {
+      setState(() => _isImageLoading = true);
+      
+      final pickedFile = await ImagePicker().pickImage(
+        source: source,
+        maxWidth: 1800,
+        maxHeight: 1800,
+        imageQuality: 85,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+          _textController.clear();
+          _hasText.value = false;
+        });
+      }
+    } on PlatformException catch (e) {
+      _showErrorSnackBar('Failed to pick image: ${e.message}');
+    } catch (e) {
+      _showErrorSnackBar('An unexpected error occurred');
+    } finally {
+      setState(() => _isImageLoading = false);
     }
   }
 
   Future<void> _recognizeText() async {
-    if (_image == null) return;
+    if (_image == null) {
+      _showErrorSnackBar('Please select an image first');
+      return;
+    }
 
-    setState(() {
-      _isProcessing = true;
-    });
+    setState(() => _isProcessing = true);
 
     try {
       final inputImage = InputImage.fromFile(_image!);
@@ -43,42 +70,50 @@ class _ScanPageState extends State<ScanPage> {
 
       setState(() {
         _textController.text = recognizedText.text;
-        _isProcessing = false;
+        _hasText.value = recognizedText.text.isNotEmpty;
       });
-      _hasText.value = _textController.text.isNotEmpty; // Tambahkan ini
     } catch (e) {
-      setState(() {
-        _isProcessing = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Error recognizing text',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
-            ),
-          ),
-          backgroundColor: Theme.of(context).dialogBackgroundColor,
-          duration: Duration(milliseconds: 700),
-        ),
-      );
+      _showErrorSnackBar('Error recognizing text. Please try again');
+    } finally {
+      setState(() => _isProcessing = false);
     }
   }
 
   void _copyToClipboard() {
+    if (_textController.text.isEmpty) return;
+
     Clipboard.setData(ClipboardData(text: _textController.text));
+    _showSuccessSnackBar('Copied to clipboard');
+  }
+
+  void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Copied to clipboard',
-          style: TextStyle(
+          message,
+          style: GoogleFonts.lato(
+            fontSize: 16,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
+        ),
+        backgroundColor : Theme.of(context).colorScheme.error,
+        duration: Duration(seconds: 1),
+      ),
+    );
+  }
+
+  void _showSuccessSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: GoogleFonts.lato(
             fontSize: 16,
             color: Theme.of(context).textTheme.bodyMedium?.color,
           ),
         ),
         backgroundColor: Theme.of(context).dialogBackgroundColor,
-        duration: Duration(milliseconds: 700),
+        duration: Duration(seconds: 1),
       ),
     );
   }
@@ -87,7 +122,7 @@ class _ScanPageState extends State<ScanPage> {
   void dispose() {
     _textRecognizer.close();
     _textController.dispose();
-    _hasText.dispose(); // Tambahkan ini
+    _hasText.dispose();
     super.dispose();
   }
 
@@ -126,7 +161,7 @@ class _ScanPageState extends State<ScanPage> {
                     child: _image == null
                         ? Text(
                             "Image not selected",
-                            style: TextStyle(
+                            style: GoogleFonts.lato(
                               color: Theme.of(context).colorScheme.outline,
                               fontSize: 18,
                               fontWeight: FontWeight.normal,
@@ -142,9 +177,11 @@ class _ScanPageState extends State<ScanPage> {
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () => _getImage(ImageSource.camera),
+                        onPressed: _isImageLoading
+                            ? null
+                            : () => _getImage(ImageSource.camera),
                         label: Text("Open Camera",
-                            style: TextStyle(
+                            style: GoogleFonts.lato(
                                 color: Theme.of(context)
                                     .textTheme
                                     .displayMedium
@@ -157,7 +194,9 @@ class _ScanPageState extends State<ScanPage> {
                     SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () => _getImage(ImageSource.gallery),
+                        onPressed: _isImageLoading
+                            ? null
+                            : () => _getImage(ImageSource.gallery),
                         label: Text("Upload Image"),
                         icon: Icon(CustomIcon.upload),
                         iconAlignment: IconAlignment.end,
@@ -171,11 +210,11 @@ class _ScanPageState extends State<ScanPage> {
                   controller: _textController,
                   maxLines: 3,
                   onChanged: (text) {
-                    _hasText.value = text.isNotEmpty; // Tambahkan ini
+                    _hasText.value = text.isNotEmpty;
                   },
                   decoration: InputDecoration(
-                    hintText: "Recognized Text Result...",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                    hintText: "Recognized text results...",
+                    hintStyle: GoogleFonts.lato(color: Colors.grey, fontSize: 14),
                     contentPadding: EdgeInsets.all(20),
                     border: OutlineInputBorder(
                       borderSide: Theme.of(context)
@@ -215,7 +254,7 @@ class _ScanPageState extends State<ScanPage> {
                           ? CircularProgressIndicator()
                           : Text(
                               "Generate",
-                              style: TextStyle(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context)
                                     .textTheme
                                     .displayMedium

@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:pak_asisten/presentation/widgets/custom_icon_icons.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:pak_asisten/core/services/flux_service.dart';
 import 'package:pak_asisten/presentation/widgets/filter_popup.dart';
 import 'package:share_plus/share_plus.dart';
@@ -29,33 +30,16 @@ class _ImagePageState extends State<ImagePage> {
 
   Set<String> _selectedFilters = {};
 
-  Future<void> _generateImage() async {
-    setState(() {
-      _isLoading = true;
-      _showButtons = false;
-    });
-
-    String fullPrompt = _promptController.text;
-    if (_selectedFilters.isNotEmpty) {
-      fullPrompt += ', ${_selectedFilters.join(', ')}';
-    }
-
-    final generatedImage = await _fluxService.generateImage(fullPrompt);
-
-    setState(() {
-      _generatedImage = generatedImage;
-      _isLoading = false;
-      _showButtons = generatedImage != null;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     _promptController.addListener(() {
-      setState(() {
-        _showClearButton = _promptController.text.isNotEmpty;
-      });
+      if (mounted) {
+        // Periksa apakah widget masih aktif
+        setState(() {
+          _showClearButton = _promptController.text.isNotEmpty;
+        });
+      }
     });
   }
 
@@ -65,9 +49,71 @@ class _ImagePageState extends State<ImagePage> {
     super.dispose();
   }
 
+  Future<void> _generateImage() async {
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+        _showButtons = false;
+      });
+    }
+
+    try {
+      String fullPrompt = _promptController.text;
+      if (_selectedFilters.isNotEmpty) {
+        fullPrompt += ', ${_selectedFilters.join(', ')}';
+      }
+
+      final generatedImage = await _fluxService.generateImage(fullPrompt);
+
+      if (mounted) {
+        setState(() {
+          _generatedImage = generatedImage;
+          _isLoading = false;
+          _showButtons = generatedImage != null;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error generating image: $e',
+              style: GoogleFonts.lato(
+                fontSize: 12,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.error,
+            duration: Duration(seconds: 1),
+          ),
+        );
+      }
+    }
+  }
+
   Future<void> _downloadImage() async {
     if (_generatedImage != null) {
-      await saveImageToGallery(context, _generatedImage!);
+      try {
+        await saveImageToGallery(context, _generatedImage!);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Failed to save image: $e',
+              style: GoogleFonts.lato(
+                fontSize: 12,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.error,
+            duration: Duration(seconds: 1),
+          ),
+        );
+      }
     }
   }
 
@@ -97,20 +143,27 @@ class _ImagePageState extends State<ImagePage> {
         SnackBar(
           content: Text(
             'Image saved to gallery',
-            style: TextStyle(
+            style: GoogleFonts.lato(
               fontSize: 16,
               color: Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
           backgroundColor: Theme.of(context).dialogBackgroundColor,
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 1),
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to save image: $e'),
+          content: Text(
+            'Failed to save image: $e',
+            style: GoogleFonts.lato(
+              fontSize: 12,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+          ),
           backgroundColor: Theme.of(context).colorScheme.error,
+          duration: Duration(seconds: 1),
         ),
       );
     }
@@ -118,12 +171,31 @@ class _ImagePageState extends State<ImagePage> {
 
   Future<void> _shareImage() async {
     if (_generatedImage != null) {
-      final tempDir = await getTemporaryDirectory();
-      final file = await File('${tempDir.path}/generated_image.png').create();
-      await file.writeAsBytes(_generatedImage!);
+      try {
+        final tempDir = await getTemporaryDirectory();
+        final file = await File('${tempDir.path}/generated_image.png').create();
+        await file.writeAsBytes(_generatedImage!);
 
-      await Share.shareXFiles([XFile(file.path)],
-          text: 'Check out this generated image!');
+        await Share.shareXFiles([XFile(file.path)],
+            text: 'Check out this generated image!');
+
+        // Hapus file temporary
+        await file.delete();
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Failed to share image: $e',
+              style: GoogleFonts.lato(
+                fontSize: 12,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.error,
+            duration: Duration(seconds: 1),
+          ),
+        );
+      }
     }
   }
 
@@ -179,7 +251,7 @@ class _ImagePageState extends State<ImagePage> {
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
                                 style: BorderStyle.solid,
-                                color: Color(0xFFBBBBBB),
+                                color: Theme.of(context).colorScheme.outline,
                                 width: 1,
                               ),
                             ),
@@ -202,10 +274,14 @@ class _ImagePageState extends State<ImagePage> {
                                     : Center(
                                         child: Text(
                                           "Image not generated",
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 16,
+                                          style: GoogleFonts.lato(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .outline,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.normal,
                                           ),
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                           ),
@@ -220,7 +296,7 @@ class _ImagePageState extends State<ImagePage> {
                               child: ElevatedButton.icon(
                                 onPressed: _downloadImage,
                                 label: Text("Download",
-                                    style: TextStyle(
+                                    style: GoogleFonts.lato(
                                         color: Theme.of(context)
                                             .textTheme
                                             .displayMedium
@@ -281,7 +357,7 @@ class _ImagePageState extends State<ImagePage> {
                         ),
                         child: Text(
                           'Filter',
-                          style: TextStyle(
+                          style: GoogleFonts.lato(
                             fontSize: 14,
                             color: Color(0xFF274688),
                             fontWeight: FontWeight.bold,
@@ -337,9 +413,9 @@ class _ImagePageState extends State<ImagePage> {
                         minLines: 1,
                         controller: _promptController,
                         decoration: InputDecoration(
-                          hintText: "Unleash Your Imagination...",
+                          hintText: "Unleash your imagination...",
                           hintStyle:
-                              TextStyle(color: Colors.grey, fontSize: 14),
+                              GoogleFonts.lato(color: Colors.grey, fontSize: 14),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           border: OutlineInputBorder(

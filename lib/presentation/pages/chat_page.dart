@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:pak_asisten/presentation/widgets/custom_icon_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pak_asisten/core/utils/error_handler.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pak_asisten/presentation/widgets/message_bubble.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -31,13 +34,13 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    loadMessages();
+    ErrorHandler.handleFutureError(loadMessages);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: _buildUI(),
     );
@@ -61,42 +64,12 @@ class _ChatPageState extends State<ChatPage> {
             Theme.of(context).textTheme.bodyMedium?.color ?? Colors.white,
         messageTextBuilder: (message, previousMessage, nextMessage) {
           if (message.customProperties?['isLoading'] == true) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
-          String parsedText = parseMarkdown(message.text);
-
-          return Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 24),
-                child: RichText(
-                  text: TextSpan(
-                    children: _buildTextSpans(parsedText),
-                    style: TextStyle(
-                      color: message.user.id == currentUser.id
-                          ? Theme.of(context).textTheme.bodySmall?.color
-                          : Theme.of(context).textTheme.bodyMedium?.color ??
-                              Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 0,
-                top: 0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.more_vert,
-                    size: 16,
-                    color: Color(0xFFD1DBF2),
-                  ),
-                  onPressed: () => _showCopyOption(message.text),
-                  padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
-                ),
-              ),
-            ],
+          return MessageBubble(
+            message: message,
+            currentUserId: currentUser.id,
           );
         },
       ),
@@ -113,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
               child: FloatingActionButton(
                 mini: true,
                 shape: CircleBorder(
-                  side: BorderSide(
+                  side: const BorderSide(
                       color: Color(0xFF274688),
                       width: 1,
                       style: BorderStyle.solid),
@@ -122,13 +95,13 @@ class _ChatPageState extends State<ChatPage> {
                 onPressed: () {
                   scrollController.animateTo(
                     0,
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   );
                 },
                 elevation: 5,
-                child: Icon(
-                  Icons.arrow_downward,
+                child: const Icon(
+                  Icons.arrow_downward_rounded,
                   color: Color(0xFF274688),
                   size: 16,
                 ),
@@ -140,11 +113,12 @@ class _ChatPageState extends State<ChatPage> {
       inputOptions: InputOptions(
         alwaysShowSend: true,
         inputMaxLines: 5,
-        inputToolbarPadding: EdgeInsets.only(bottom: 15),
-        inputToolbarMargin: EdgeInsets.only(top: 15),
+        inputToolbarPadding: const EdgeInsets.only(bottom: 15),
+        inputToolbarMargin: const EdgeInsets.only(top: 15),
+        inputTextStyle: GoogleFonts.lato(),
         sendButtonBuilder: (onSend) {
           return IconButton(
-            icon: Icon(CustomIcon.send),
+            icon: const Icon(CustomIcon.send),
             onPressed: onSend,
             color: Theme.of(context)
                 .bottomNavigationBarTheme
@@ -161,12 +135,13 @@ class _ChatPageState extends State<ChatPage> {
         ],
         inputDecoration: InputDecoration(
           hintText: "Chat with Gemini...",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
-          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          hintStyle: GoogleFonts.lato(color: Colors.grey, fontSize: 14),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           border: OutlineInputBorder(
             borderSide:
                 Theme.of(context).inputDecorationTheme.border!.borderSide,
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(30),
             ),
           ),
@@ -181,7 +156,7 @@ class _ChatPageState extends State<ChatPage> {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
             image: FileImage(File(_attachedImage!.path)),
             fit: BoxFit.cover,
@@ -237,10 +212,14 @@ class _ChatPageState extends State<ChatPage> {
       String fullResponse = "";
       gemini.streamGenerateContent(question, images: images).listen(
         (event) {
-          String response = event.content?.parts?.fold(
-                  "", (previous, current) => "$previous ${current.text}") ??
-              "";
-          fullResponse += response;
+          String response =
+              event.content?.parts?.map((part) => part.text).join() ?? "";
+
+          if (fullResponse.isEmpty) {
+            fullResponse = response;
+          } else {
+            fullResponse += response;
+          }
 
           setState(() {
             messages.last = ChatMessage(
@@ -318,50 +297,6 @@ class _ChatPageState extends State<ChatPage> {
     return text;
   }
 
-  List<TextSpan> _buildTextSpans(String text) {
-    List<TextSpan> spans = [];
-    RegExp exp = RegExp(
-        r'<(\w+)(?:\s+[^>]*)?>(((?!<\1[^>]*>).)*?)</\1>|([^<]+)',
-        dotAll: true);
-
-    exp.allMatches(text).forEach((match) {
-      if (match.group(4) != null) {
-        // Plain text
-        spans.add(TextSpan(text: match.group(4)));
-      } else {
-        // Formatted text
-        String tag = match.group(1)!;
-        String content = match.group(2)!;
-
-        switch (tag.toLowerCase()) {
-          case 'b':
-          case 'strong':
-            spans.add(TextSpan(
-                text: content, style: TextStyle(fontWeight: FontWeight.bold)));
-            break;
-          case 'i':
-          case 'em':
-            spans.add(TextSpan(
-                text: content, style: TextStyle(fontStyle: FontStyle.italic)));
-            break;
-          case 's':
-          case 'strike':
-            spans.add(TextSpan(
-                text: content,
-                style: TextStyle(decoration: TextDecoration.lineThrough)));
-            break;
-          case 'li':
-            spans.add(TextSpan(text: "• $content\n"));
-            break;
-          default:
-            spans.add(TextSpan(text: content));
-        }
-      }
-    });
-
-    return spans;
-  }
-
   Future<void> saveMessages() async {
     final prefs = await SharedPreferences.getInstance();
     final messagesToSave = messages
@@ -404,62 +339,5 @@ class _ChatPageState extends State<ChatPage> {
             .toList();
       });
     }
-  }
-
-
-// Copy to Clipboard
-  void _showCopyOption(String text) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                horizontalTitleGap: 8,
-                leading: Icon(
-                  CustomIcon.clipboard,
-                  size: 20,
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
-                ),
-                title: Text(
-                  'Copy to Clipboard',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                  ),
-                ),
-                tileColor: Theme.of(context).dialogBackgroundColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                contentPadding:
-                    EdgeInsets.only(bottom: 15, left: 15, right: 15),
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: text));
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Copied to clipboard',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
-                        ),
-                      ),
-                      backgroundColor: Theme.of(context).dialogBackgroundColor,
-                      duration: Duration(milliseconds: 700),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 }

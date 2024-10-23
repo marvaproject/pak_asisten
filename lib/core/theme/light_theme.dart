@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
@@ -9,7 +10,8 @@ ThemeData lightTheme = ThemeData(
     outline: Color(0xFFBBBBBB),
     outlineVariant: Color(0xFF274688),
     shadow: Color(0x4C274688),
-    inverseSurface: Color(0xFFFFFFFF)
+    inverseSurface: Color(0xFFFFFFFF),
+    error: Color(0xFFE74049)
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(
@@ -17,7 +19,7 @@ ThemeData lightTheme = ThemeData(
       iconSize: WidgetStateProperty.all(16),
       backgroundColor: WidgetStateProperty.all(Color(0xFF274688)),
       textStyle: WidgetStateProperty.all(
-        TextStyle(
+        GoogleFonts.lato(
           fontSize: 15,
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -42,7 +44,7 @@ ThemeData lightTheme = ThemeData(
       iconSize: WidgetStateProperty.all(16),
       backgroundColor: WidgetStateProperty.all(Colors.white),
       textStyle: WidgetStateProperty.all(
-        TextStyle(
+        GoogleFonts.lato(
           fontSize: 15,
           color: Color(0xFF274688),
           fontWeight: FontWeight.bold,
@@ -89,20 +91,20 @@ ThemeData lightTheme = ThemeData(
     unselectedIconTheme: IconThemeData(
       color: Color(0xFF171F22),
     ),
-    selectedLabelStyle: TextStyle(
+    selectedLabelStyle: GoogleFonts.lato(
       color: Color(0xFF274688),
     ),
   ),
   textTheme: TextTheme(
-    bodySmall: TextStyle(
+    bodySmall: GoogleFonts.lato(
       fontSize: 12,
       color: Color(0xFFFFFFFF),
     ),
-    bodyMedium: TextStyle(
+    bodyMedium: GoogleFonts.lato(
       fontSize: 12,
       color: Color(0xFF171F22),
     ),
-    displayMedium: TextStyle(
+    displayMedium: GoogleFonts.lato(
       color: Color(0xFFFFFFFF),
     ),
   ),

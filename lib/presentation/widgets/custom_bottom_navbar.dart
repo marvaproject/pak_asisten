@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pak_asisten/presentation/controllers/navigation_controller.dart';
-import 'package:pak_asisten/presentation/widgets/custom_icon_icons.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:provider/provider.dart';
 
 class CustomBottomNavBar extends StatefulWidget { // Ubah menjadi StatefulWidget
@@ -52,7 +53,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 .unselectedIconTheme
                 ?.color,
             iconSize: 22,
-            textStyle: TextStyle(
+            textStyle: GoogleFonts.lato(
               fontSize: 15,
               fontWeight: FontWeight.bold,
               color: Theme.of(context)

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pak_asisten/core/theme/dark_theme.dart';
@@ -24,14 +26,15 @@ class PakAsisten extends StatelessWidget {
         themeMode: themeProvider.themeMode,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: AnimatedSplashScreen(
-          splash: 'assets/logo/LogoSplashScreen.gif',
-          splashIconSize: 300,
-          nextScreen: const NavBar(),
-          duration: 2800,
-          splashTransition: SplashTransition.fadeTransition,
-          backgroundColor: const Color.fromARGB(255, 13, 28, 58),
-        ),
+        home: NavBar(),
+        // home: AnimatedSplashScreen(
+        //   splash: 'assets/logo/LogoSplashScreen.gif',
+        //   splashIconSize: 300,
+        //   nextScreen: const NavBar(),
+        //   duration: 2800,
+        //   splashTransition: SplashTransition.fadeTransition,
+        //   backgroundColor: const Color.fromARGB(255, 13, 28, 58),
+        // ),
       ),
     );
   }

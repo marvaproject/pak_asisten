@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FilterPopup extends StatefulWidget {
   final List<String> selectedFilters;
@@ -51,7 +52,7 @@ class _FilterPopupState extends State<FilterPopup> {
           Padding(
             padding: EdgeInsets.only(top: 15, bottom: 6),
             child: Text('Filter',
-                style: TextStyle(
+                style: GoogleFonts.lato(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
@@ -80,7 +81,7 @@ class _FilterPopupState extends State<FilterPopup> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(category.name,
-            style: TextStyle(
+            style: GoogleFonts.lato(
                 color: Theme.of(context).textTheme.titleMedium?.color,
                 fontSize: 16,
                 fontWeight: FontWeight.bold)),
