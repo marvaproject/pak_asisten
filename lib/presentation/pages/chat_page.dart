@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
+import 'package:pak_asisten/presentation/widgets/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -32,7 +32,6 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     loadMessages();
-    clearOldMessages();
   }
 
   @override
@@ -381,30 +380,32 @@ class _ChatPageState extends State<ChatPage> {
     final String? savedMessages = prefs.getString('chat_messages');
     if (savedMessages != null) {
       final List<dynamic> decodedMessages = jsonDecode(savedMessages);
+      final now = DateTime.now();
       setState(() {
         messages = decodedMessages
-            .map((msgMap) => ChatMessage(
+            .map((msgMap) {
+              final messageDate = DateTime.parse(msgMap['createdAt']);
+              // Hanya tampilkan pesan yang kurang dari 24 jam
+              if (now.difference(messageDate) < Duration(hours: 24)) {
+                return ChatMessage(
                   text: msgMap['text'],
-                  createdAt: DateTime.parse(msgMap['createdAt']),
+                  createdAt: messageDate,
                   user: msgMap['userId'] == currentUser.id
                       ? currentUser
                       : geminiUser,
                   // Sesuaikan dengan properti lain yang Anda simpan
-                ))
+                );
+              } else {
+                // Lewati pesan yang sudah lebih dari 24 jam
+                return null;
+              }
+            })
+            .whereType<ChatMessage>() // Hapus pesan null
             .toList();
       });
     }
   }
 
-  Future<void> clearOldMessages() async {
-    final now = DateTime.now();
-    setState(() {
-      messages = messages
-          .where((msg) => now.difference(msg.createdAt) < Duration(hours: 24))
-          .toList();
-    });
-    await saveMessages();
-  }
 
 // Copy to Clipboard
   void _showCopyOption(String text) {

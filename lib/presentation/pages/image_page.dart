@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
 import 'package:intl/intl.dart';
-import 'package:pak_asisten/custom_class/custom_icon_icons.dart';
-import 'package:pak_asisten/custom_class/flux_service.dart';
-import 'package:pak_asisten/custom_widget/filter_popup.dart';
+import 'package:pak_asisten/presentation/widgets/custom_icon_icons.dart';
+import 'package:pak_asisten/core/services/flux_service.dart';
+import 'package:pak_asisten/presentation/widgets/filter_popup.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';

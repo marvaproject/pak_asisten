@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:pak_asisten/env/env.dart';
+import 'package:pak_asisten/core/config/env/env.dart';
 
 class FluxService {
   static const String _apiUrl = 'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell';
