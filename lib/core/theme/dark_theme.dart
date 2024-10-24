@@ -10,7 +10,9 @@ ThemeData darkTheme = ThemeData(
     outline: Color(0xFF274688),
     outlineVariant: Color(0xFFBBBBBB),
     inverseSurface: Color(0xFF14274F),
-    error: Color(0xFFE74049)
+    error: Color(0xFFE74049),
+    tertiary: Color(0xFF274688),
+    tertiaryContainer: Color(0xFFF4F8FF),
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(
@@ -55,7 +57,7 @@ ThemeData darkTheme = ThemeData(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),
           side: BorderSide(
-              color: Color(0xFF274688), width: 1, style: BorderStyle.solid),
+              color: Color(0xFF274688), width: 0.5, style: BorderStyle.solid),
         ),
       ),
       shadowColor: WidgetStateProperty.all(Color(0x4C274688)),
@@ -68,11 +70,7 @@ ThemeData darkTheme = ThemeData(
   dialogBackgroundColor: Color(0xFF3D5891),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xFFBBBBBB),
-        width: 1,
-        style: BorderStyle.solid,
-      ),
+      borderSide: BorderSide(color: Color(0xFF274688)),
     ),
   ),
   appBarTheme: AppBarTheme(
@@ -106,5 +104,7 @@ ThemeData darkTheme = ThemeData(
     displayMedium: GoogleFonts.lato(
       color: Color(0xFFF4F8FF),
     ),
+    displayLarge: GoogleFonts.lato(
+        color: Color(0xFFFFFFFF), fontSize: 20, fontWeight: FontWeight.bold),
   ),
 );

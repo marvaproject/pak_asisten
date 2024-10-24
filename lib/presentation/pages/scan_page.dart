@@ -32,7 +32,7 @@ class _ScanPageState extends State<ScanPage> {
   Future<void> _getImage(ImageSource source) async {
     try {
       setState(() => _isImageLoading = true);
-      
+
       final pickedFile = await ImagePicker().pickImage(
         source: source,
         maxWidth: 1800,
@@ -96,7 +96,7 @@ class _ScanPageState extends State<ScanPage> {
             color: Theme.of(context).textTheme.bodyMedium?.color,
           ),
         ),
-        backgroundColor : Theme.of(context).colorScheme.error,
+        backgroundColor: Theme.of(context).colorScheme.error,
         duration: Duration(seconds: 1),
       ),
     );
@@ -136,7 +136,11 @@ class _ScanPageState extends State<ScanPage> {
             padding: EdgeInsets.all(15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text('Text Recognition',
+                    style: Theme.of(context).textTheme.displayLarge),
+                SizedBox(height: 15),
                 AspectRatio(
                   aspectRatio: 4 / 3,
                   child: Container(
@@ -155,7 +159,7 @@ class _ScanPageState extends State<ScanPage> {
                       border: Border.all(
                         style: BorderStyle.solid,
                         color: Theme.of(context).colorScheme.outline,
-                        width: 1,
+                        width: 0.5,
                       ),
                     ),
                     child: _image == null
@@ -214,14 +218,32 @@ class _ScanPageState extends State<ScanPage> {
                   },
                   decoration: InputDecoration(
                     hintText: "Recognized text results...",
-                    hintStyle: GoogleFonts.lato(color: Colors.grey, fontSize: 14),
+                    hintStyle:
+                        GoogleFonts.lato(color: Colors.grey, fontSize: 14),
                     contentPadding: EdgeInsets.all(20),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context)
+                              .inputDecorationTheme
+                              .border!
+                              .borderSide
+                              .color,
+                          width: 0.5),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                    ),
                     border: OutlineInputBorder(
-                      borderSide: Theme.of(context)
-                          .inputDecorationTheme
-                          .border!
-                          .borderSide,
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      borderSide: BorderSide(
+                          color: Theme.of(context)
+                              .inputDecorationTheme
+                              .border!
+                              .borderSide
+                              .color,
+                          width: 0.5),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
                     ),
                     suffixIcon: ValueListenableBuilder<bool>(
                       valueListenable: _hasText,

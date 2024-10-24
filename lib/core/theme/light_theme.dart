@@ -11,7 +11,9 @@ ThemeData lightTheme = ThemeData(
     outlineVariant: Color(0xFF274688),
     shadow: Color(0x4C274688),
     inverseSurface: Color(0xFFFFFFFF),
-    error: Color(0xFFE74049)
+    error: Color(0xFFE74049),
+    tertiary: Color(0xFFFFFFFF),
+    tertiaryContainer: Color(0xFFFFFFFF),
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(
@@ -56,7 +58,7 @@ ThemeData lightTheme = ThemeData(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),
           side: BorderSide(
-              color: Color(0xFF274688), width: 1, style: BorderStyle.solid),
+              color: Color(0xFF274688), width: 0.5, style: BorderStyle.solid),
         ),
       ),
       shadowColor: WidgetStateProperty.all(Color(0x4C274688)),
@@ -71,8 +73,6 @@ ThemeData lightTheme = ThemeData(
     border: OutlineInputBorder(
       borderSide: BorderSide(
         color: Color(0xFFBBBBBB),
-        width: 1,
-        style: BorderStyle.solid,
       ),
     ),
   ),
@@ -106,6 +106,11 @@ ThemeData lightTheme = ThemeData(
     ),
     displayMedium: GoogleFonts.lato(
       color: Color(0xFFFFFFFF),
+    ),
+    displayLarge: GoogleFonts.lato(
+      color: Color(0xFF274688),
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
     ),
   ),
 );

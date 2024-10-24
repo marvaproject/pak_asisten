@@ -43,10 +43,10 @@ class _FilterPopupState extends State<FilterPopup> {
       width: popupWidth,
       height: popupHeight,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.inverseSurface,
-        borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant, width: 1)
-      ),
+          color: Theme.of(context).colorScheme.inverseSurface,
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.outlineVariant, width: 1)),
       child: Column(
         children: [
           Padding(
@@ -97,10 +97,11 @@ class _FilterPopupState extends State<FilterPopup> {
                   onSelected: (_) => _toggleFilter(option),
                   padding: EdgeInsets.all(4),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                   checkmarkColor: Color(0xFF01796f),
-                  side: BorderSide(width: 0.6),
+                  side: BorderSide(
+                      width: 0.5, color: Theme.of(context).colorScheme.outline),
                   labelPadding: EdgeInsets.symmetric(horizontal: 5),
                 ),
               )

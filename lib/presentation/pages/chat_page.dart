@@ -138,11 +138,28 @@ class _ChatPageState extends State<ChatPage> {
           hintStyle: GoogleFonts.lato(color: Colors.grey, fontSize: 14),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .border!
+                    .borderSide
+                    .color,
+                width: 0.5),
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
+            ),
+          ),
           border: OutlineInputBorder(
-            borderSide:
-                Theme.of(context).inputDecorationTheme.border!.borderSide,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(30),
+            borderSide: BorderSide(
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .border!
+                    .borderSide
+                    .color,
+                width: 0.5),
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
             ),
           ),
         ),

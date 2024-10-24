@@ -240,7 +240,11 @@ class _ImagePageState extends State<ImagePage> {
                   padding: EdgeInsets.all(15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text('Image Generation',
+                          style: Theme.of(context).textTheme.displayLarge),
+                      SizedBox(height: 15),
                       SizedBox(
                         width: double.infinity,
                         child: AspectRatio(
@@ -252,7 +256,7 @@ class _ImagePageState extends State<ImagePage> {
                               border: Border.all(
                                 style: BorderStyle.solid,
                                 color: Theme.of(context).colorScheme.outline,
-                                width: 1,
+                                width: 0.5,
                               ),
                             ),
                             child: _isLoading
@@ -350,7 +354,7 @@ class _ImagePageState extends State<ImagePage> {
                                   BorderRadius.all(Radius.circular(20)),
                               side: BorderSide(
                                   color: Color(0xFF274688),
-                                  width: 1,
+                                  width: 0.5,
                                   style: BorderStyle.solid),
                             ),
                           ),
@@ -414,15 +418,30 @@ class _ImagePageState extends State<ImagePage> {
                         controller: _promptController,
                         decoration: InputDecoration(
                           hintText: "Unleash your imagination...",
-                          hintStyle:
-                              GoogleFonts.lato(color: Colors.grey, fontSize: 14),
+                          hintStyle: GoogleFonts.lato(
+                              color: Colors.grey, fontSize: 14),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border!
+                                    .borderSide
+                                    .color,
+                                width: 0.5),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                            ),
+                          ),
                           border: OutlineInputBorder(
-                            borderSide: Theme.of(context)
-                                .inputDecorationTheme
-                                .border!
-                                .borderSide,
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border!
+                                    .borderSide
+                                    .color,
+                                width: 0.5),
                             borderRadius: BorderRadius.all(
                               Radius.circular(25),
                             ),
