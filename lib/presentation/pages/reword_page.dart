@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pak_asisten/presentation/widgets/paraphraser_widget.dart';
 import 'package:pak_asisten/presentation/widgets/summarizer_widget.dart';
 import 'package:pak_asisten/presentation/widgets/translate_widget.dart';
 
@@ -61,19 +62,21 @@ class _RewordPageState extends State<RewordPage> {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                   decoration: BoxDecoration(
-                      color: Theme.of(context).dialogBackgroundColor,
-                      borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromRGBO(149, 157, 165, 0.2),
-                          blurRadius: 24,
-                          spreadRadius: 0,
-                          offset: Offset(
-                            0,
-                            8,
-                          ),
+                    color: Theme.of(context).dialogBackgroundColor,
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(149, 157, 165, 0.2),
+                        blurRadius: 24,
+                        spreadRadius: 0,
+                        offset: Offset(
+                          0,
+                          8,
                         ),
-                      ]),
+                      ),
+                    ],
+                  ),
+                  child: ParaphraserWidget(),
                 ),
               ],
             ),

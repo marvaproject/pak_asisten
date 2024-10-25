@@ -3,7 +3,7 @@
 <!-- Judul Project -->
 <img src="assets/logo/Logo Banner.png" alt="logo" width="50%" height="auto" />
 
-# Pak Asisten (Mobile Apps with AI for Daily Life)
+# Pak Asisten (Flutter Mobile App with AI to Assist in Learning)
 
 <!-- Badge Repo Project -->
 [![Github Contributor](https://img.shields.io/github/contributors/marvaproject/pak_asisten?style=for-the-badge)](https://github.com/marvaproject/pak_asisten/graphs/contributors)
