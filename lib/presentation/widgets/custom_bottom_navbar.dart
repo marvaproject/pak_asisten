@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:pak_asisten/presentation/controllers/navigation_controller.dart';
 import 'package:pak_asisten/core/services/custom_icon_icons.dart';
+import 'package:pak_asisten/presentation/controllers/navigation_controller.dart';
 import 'package:provider/provider.dart';
 
-class CustomBottomNavBar extends StatefulWidget { // Ubah menjadi StatefulWidget
+class CustomBottomNavBar extends StatefulWidget {
+  // Ubah menjadi StatefulWidget
   final int selectedIndex;
   final Function(int) onTabChange;
 
@@ -22,7 +23,8 @@ class CustomBottomNavBar extends StatefulWidget { // Ubah menjadi StatefulWidget
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
-    final navigationController = Provider.of<NavigationController>(context); // Akses di sini
+    final navigationController =
+        Provider.of<NavigationController>(context); // Akses di sini
 
     return Container(
       decoration: BoxDecoration(
@@ -36,8 +38,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-              top: 15, bottom: 25, right: 20, left: 20),
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 25, right: 20, left: 20),
           child: GNav(
             gap: 8,
             hoverColor: Colors.transparent,
@@ -48,7 +50,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 ?.color,
             tabBackgroundColor:
                 Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
-             color: Theme.of(context)
+            color: Theme.of(context)
                 .bottomNavigationBarTheme
                 .unselectedIconTheme
                 ?.color,
@@ -68,7 +70,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               GButton(icon: CustomIcon.image, text: 'Image'),
               GButton(icon: CustomIcon.scan, text: 'Scan Text'),
               GButton(icon: CustomIcon.quiz, text: 'Quiz'),
-              GButton(icon: CustomIcon.transcript, text: 'Reword'),
+              GButton(icon: CustomIcon.reword, text: 'Reword'),
             ],
             selectedIndex: navigationController.selectedIndex,
             onTabChange: widget.onTabChange,

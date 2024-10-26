@@ -3,24 +3,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
+import 'package:pak_asisten/core/services/grammar_checker_service.dart';
 
-class ParaphraserWidget extends StatefulWidget {
-  const ParaphraserWidget({super.key});
+class GrammarCheckerWidget extends StatefulWidget {
+  const GrammarCheckerWidget({super.key});
 
   @override
-  _ParaphraserWidgetState createState() => _ParaphraserWidgetState();
+  _GrammarCheckerWidgetState createState() => _GrammarCheckerWidgetState();
 }
 
-class _ParaphraserWidgetState extends State<ParaphraserWidget> {
+class _GrammarCheckerWidgetState extends State<GrammarCheckerWidget> {
   static const _borderRadius = BorderRadius.all(Radius.circular(25));
-  static const _languages = ['English'];
+
+  final GrammarCheckerService _grammarCheckerService = GrammarCheckerService();
 
   final ValueNotifier<bool> _hasSourceText = ValueNotifier<bool>(false);
   final TextEditingController _sourceTextController = TextEditingController();
-  final TextEditingController _summarizedTextController = TextEditingController();
+  final TextEditingController _checkedTextController = TextEditingController();
 
-  String _selectedLanguage = 'English';
-  final bool _isSummarizing = false;
+  bool _isChecking = false;
 
   @override
   void initState() {
@@ -32,7 +34,7 @@ class _ParaphraserWidgetState extends State<ParaphraserWidget> {
   @override
   void dispose() {
     _sourceTextController.dispose();
-    _summarizedTextController.dispose();
+    _checkedTextController.dispose();
     _hasSourceText.dispose();
     super.dispose();
   }
@@ -40,7 +42,7 @@ class _ParaphraserWidgetState extends State<ParaphraserWidget> {
   void _clearSourceText() {
     setState(() {
       _sourceTextController.clear();
-      _summarizedTextController.clear();
+      _checkedTextController.clear();
       _hasSourceText.value = false;
     });
   }
@@ -60,27 +62,66 @@ class _ParaphraserWidgetState extends State<ParaphraserWidget> {
     });
   }
 
+  Future<void> _checkGrammar() async {
+    if (_sourceTextController.text.isEmpty) return;
+
+    setState(() {
+      _isChecking = true;
+    });
+
+    try {
+      String result =
+          await _grammarCheckerService.checkGrammar(_sourceTextController.text);
+      setState(() {
+        _checkedTextController.text = result;
+      });
+    } catch (e) {
+      _showErrorSnackBar(
+          'Error checking grammar: $e');
+    } finally {
+      setState(() {
+        _isChecking = false;
+      });
+    }
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: GoogleFonts.lato(
+            fontSize: 16,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.error,
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Paraphraser',
+        Text('Grammar Checker',
             style: Theme.of(context).textTheme.displayLarge),
         const SizedBox(height: 15),
         _buildTextField(
           controller: _sourceTextController,
-          hintText: "Enter text to paraphrase...",
+          hintText: "Enter text to check grammar...",
           hasText: _hasSourceText,
           onCopy: () => _copyToClipboard(_sourceTextController),
           onClear: _clearSourceText,
         ),
         const SizedBox(height: 15),
-        if (_isSummarizing) ...[
+        if (_isChecking || _checkedTextController.text.isNotEmpty) ...[
           _buildTextField(
-            controller: _summarizedTextController,
-            hintText: "Paraphrased result...",
+            controller: _checkedTextController,
+            hintText: "Checked grammar result...",
             hasText: ValueNotifier<bool>(true),
-            onCopy: () => _copyToClipboard(_summarizedTextController),
+            onCopy: () => _copyToClipboard(_checkedTextController),
             readOnly: true,
           ),
         ],
@@ -92,92 +133,24 @@ class _ParaphraserWidgetState extends State<ParaphraserWidget> {
               child: SizedBox(
                 height: 44,
                 child: ElevatedButton.icon(
-                  onPressed: _isSummarizing ? null : () {
-                    // Placeholder for paraphrase function
-                    print('Paraphrase button pressed');
-                  },
+                  onPressed: _isChecking ? null : _checkGrammar,
                   label: Text(
-                    _isSummarizing ? "Paraphrasing..." : "Paraphrase",
+                    _isChecking ? "Checking..." : "Check Grammar",
                     style: GoogleFonts.lato(
-                        color: Theme.of(context).textTheme.displayMedium?.color),
+                        color:
+                            Theme.of(context).textTheme.displayMedium?.color),
                   ),
-                  icon: Icon(_isSummarizing
-                      ? Icons.hourglass_empty
-                      : Icons.settings_suggest_rounded),
+                  icon: Icon(_isChecking
+                      ? Icons.hourglass_empty_rounded
+                      : CustomIcon.checker),
                   iconAlignment: IconAlignment.end,
                   style: Theme.of(context).filledButtonTheme.style,
                 ),
               ),
             ),
-            const SizedBox(width: 15),
-            Flexible(
-              flex: 2,
-              child: SizedBox(
-                height: 44,
-                child: _buildConstrainedDropdown(),
-              ),
-            ),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildConstrainedDropdown() {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.tertiaryContainer ,
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: const Color(0xFF274688), width: 0.5),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x4C274688),
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: DropdownButtonHideUnderline(
-        child: ButtonTheme(
-          alignedDropdown: true,
-          child: DropdownButton<String>(
-            value: _selectedLanguage,
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                setState(() {
-                  _selectedLanguage = newValue;
-                });
-              }
-            },
-            isExpanded: true,
-            icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF274688)),
-            style: GoogleFonts.lato(
-              fontSize: 15,
-              color: const Color(0xFF274688),
-              fontWeight: FontWeight.bold,
-            ),
-            borderRadius: BorderRadius.circular(25),
-            dropdownColor: Theme.of(context).colorScheme.tertiaryContainer,
-            menuMaxHeight: MediaQuery.of(context).size.height * 0.6,
-            itemHeight: 50,
-            items: _languages.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Container(
-                  constraints: const BoxConstraints(minWidth: 120),
-                  child: Text(
-                    value,
-                    style: GoogleFonts.lato(),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-      ),
     );
   }
 
@@ -223,7 +196,7 @@ class _ParaphraserWidgetState extends State<ParaphraserWidget> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.content_copy,
+                        icon: Icon(CustomIcon.clipboard,
                             size: 20,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color),
@@ -248,3 +221,4 @@ class _ParaphraserWidgetState extends State<ParaphraserWidget> {
     );
   }
 }
+

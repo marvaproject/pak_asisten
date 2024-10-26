@@ -5,7 +5,8 @@ import 'package:pak_asisten/core/config/env/env.dart';
 
 class SummarizerService {
   static const String _huggingFaceToken = Env.huggingfaceApiKey;
-  static const String _bartApiUrl = 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn';
+  static const String _bartApiUrl =
+      'https://api-inference.huggingface.co/models/facebook/bart-large-cnn';
 
   static Future<String> summarizeText(String text, String language) async {
     try {
@@ -27,13 +28,15 @@ class SummarizerService {
         'Content-Type': 'application/json',
       },
       body: json.encode({
-        'inputs': text,
+        'inputs': text.length > 1024
+            ? text.substring(0, 1024)
+            : text,
         'parameters': {
-          'max_length': 300,
-          'min_length': 100,
+          'max_length': 150, 
+          'min_length': 30,
           'length_penalty': 2.0,
-          'num_beams': 4,
-          'early_stopping': false,
+          'num_beams': 2, 
+          'early_stopping': true, 
         }
       }),
     );

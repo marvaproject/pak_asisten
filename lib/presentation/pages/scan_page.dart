@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -131,165 +131,174 @@ class _ScanPageState extends State<ScanPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Text Recognition',
-                    style: Theme.of(context).textTheme.displayLarge),
-                SizedBox(height: 15),
-                AspectRatio(
-                  aspectRatio: 4 / 3,
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      image: _image != null
-                          ? DecorationImage(
-                              image: FileImage(_image!),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
-                      color: _image == null
-                          ? Theme.of(context).colorScheme.surface
-                          : null,
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(
-                        style: BorderStyle.solid,
-                        color: Theme.of(context).colorScheme.outline,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: _image == null
-                        ? Text(
-                            "Image not selected",
-                            style: GoogleFonts.lato(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: [
+                      Text('Text Recognition',
+                          style: Theme.of(context).textTheme.displayLarge),
+                      SizedBox(height: 15),
+                      AspectRatio(
+                        aspectRatio: 4 / 3,
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            image: _image != null
+                                ? DecorationImage(
+                                    image: FileImage(_image!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                            color: _image == null
+                                ? Theme.of(context).colorScheme.surface
+                                : null,
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                              style: BorderStyle.solid,
                               color: Theme.of(context).colorScheme.outline,
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
+                              width: 0.5,
                             ),
-                            textAlign: TextAlign.center,
-                          )
-                        : null,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _isImageLoading
-                            ? null
-                            : () => _getImage(ImageSource.camera),
-                        label: Text("Open Camera",
-                            style: GoogleFonts.lato(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.color)),
-                        icon: Icon(CustomIcon.camera),
-                        iconAlignment: IconAlignment.end,
-                        style: Theme.of(context).filledButtonTheme.style,
+                          ),
+                          child: _image == null
+                              ? Text(
+                                  "Image not selected",
+                                  style: GoogleFonts.lato(
+                                    color:
+                                        Theme.of(context).colorScheme.outline,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                )
+                              : null,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _isImageLoading
-                            ? null
-                            : () => _getImage(ImageSource.gallery),
-                        label: Text("Upload Image"),
-                        icon: Icon(CustomIcon.upload),
-                        iconAlignment: IconAlignment.end,
-                        style: Theme.of(context).outlinedButtonTheme.style,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: _textController,
-                  maxLines: 3,
-                  onChanged: (text) {
-                    _hasText.value = text.isNotEmpty;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Recognized text results...",
-                    hintStyle:
-                        GoogleFonts.lato(color: Colors.grey, fontSize: 14),
-                    contentPadding: EdgeInsets.all(20),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .inputDecorationTheme
-                              .border!
-                              .borderSide
-                              .color,
-                          width: 0.5),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(25),
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .inputDecorationTheme
-                              .border!
-                              .borderSide
-                              .color,
-                          width: 0.5),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(25),
-                      ),
-                    ),
-                    suffixIcon: ValueListenableBuilder<bool>(
-                      valueListenable: _hasText,
-                      builder: (context, hasText, child) {
-                        return hasText
-                            ? IconButton(
-                                icon: Icon(
-                                  CustomIcon.clipboard,
-                                  size: 20,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color,
-                                ),
-                                onPressed: _copyToClipboard,
-                              )
-                            : SizedBox.shrink();
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                if (_image != null)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: TextButton(
-                      onPressed: _isProcessing ? null : _recognizeText,
-                      style: Theme.of(context).filledButtonTheme.style,
-                      child: _isProcessing
-                          ? CircularProgressIndicator()
-                          : Text(
-                              "Generate",
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.color,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: _isImageLoading
+                                  ? null
+                                  : () => _getImage(ImageSource.camera),
+                              label: Text("Open Camera",
+                                  style: GoogleFonts.lato(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium
+                                          ?.color)),
+                              icon: Icon(CustomIcon.camera),
+                              iconAlignment: IconAlignment.end,
+                              style: Theme.of(context).filledButtonTheme.style,
                             ),
-                    ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: _isImageLoading
+                                  ? null
+                                  : () => _getImage(ImageSource.gallery),
+                              label: Text("Upload Image"),
+                              icon: Icon(CustomIcon.upload),
+                              iconAlignment: IconAlignment.end,
+                              style:
+                                  Theme.of(context).outlinedButtonTheme.style,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: _textController,
+                        minLines: 3,
+                        maxLines: 7,
+                        onChanged: (text) {
+                          _hasText.value = text.isNotEmpty;
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Recognized text results...",
+                          hintStyle: GoogleFonts.lato(
+                              color: Colors.grey, fontSize: 14),
+                          contentPadding: EdgeInsets.all(20),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border!
+                                    .borderSide
+                                    .color,
+                                width: 0.5),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border!
+                                    .borderSide
+                                    .color,
+                                width: 0.5),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                            ),
+                          ),
+                          suffixIcon: ValueListenableBuilder<bool>(
+                            valueListenable: _hasText,
+                            builder: (context, hasText, child) {
+                              return hasText
+                                  ? IconButton(
+                                      icon: Icon(
+                                        CustomIcon.clipboard,
+                                        size: 20,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.color,
+                                      ),
+                                      onPressed: _copyToClipboard,
+                                    )
+                                  : SizedBox.shrink();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-              ],
+                ),
+              ),
             ),
-          ),
+            if (_image != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: TextButton(
+                    onPressed: _isProcessing ? null : _recognizeText,
+                    style: Theme.of(context).filledButtonTheme.style,
+                    child: _isProcessing
+                        ? CircularProgressIndicator()
+                        : Text(
+                            "Generate",
+                            style: GoogleFonts.lato(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.color,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );

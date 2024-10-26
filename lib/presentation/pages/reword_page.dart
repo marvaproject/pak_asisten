@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pak_asisten/presentation/widgets/paraphraser_widget.dart';
+import 'package:pak_asisten/presentation/widgets/grammar_checker_widget.dart';
 import 'package:pak_asisten/presentation/widgets/summarizer_widget.dart';
 import 'package:pak_asisten/presentation/widgets/translate_widget.dart';
 
@@ -76,7 +76,7 @@ class _RewordPageState extends State<RewordPage> {
                       ),
                     ],
                   ),
-                  child: ParaphraserWidget(),
+                  child: GrammarCheckerWidget(),
                 ),
               ],
             ),

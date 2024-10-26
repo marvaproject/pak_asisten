@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:pak_asisten/core/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});

@@ -146,8 +146,8 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
                             Theme.of(context).textTheme.displayMedium?.color),
                   ),
                   icon: Icon(_isSummarizing
-                      ? Icons.hourglass_empty
-                      : Icons.settings_suggest_rounded),
+                      ? Icons.hourglass_empty_rounded
+                      : CustomIcon.summarizer),
                   iconAlignment: IconAlignment.end,
                   style: Theme.of(context).filledButtonTheme.style,
                 ),
