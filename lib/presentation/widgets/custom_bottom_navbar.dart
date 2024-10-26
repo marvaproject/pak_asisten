@@ -39,7 +39,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       child: SafeArea(
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 15, bottom: 25, right: 20, left: 20),
+              const EdgeInsets.only(top: 16, bottom: 25, right: 20, left: 20),
           child: GNav(
             gap: 8,
             hoverColor: Colors.transparent,

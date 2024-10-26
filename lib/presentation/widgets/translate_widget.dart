@@ -19,13 +19,13 @@ class _TranslateWidgetState extends State<TranslateWidget> {
   final TextEditingController _translatedTextController =
       TextEditingController();
 
-  String _selectedLanguage1 = 'Bahasa Indonesia';
+  String _selectedLanguage1 = 'Indonesian';
   String _selectedLanguage2 = 'English';
 
   final translator = GoogleTranslator();
 
   final Map<String, String> _languageCodes = {
-    'Bahasa Indonesia': 'id',
+    'Indonesian': 'id',
     'English': 'en',
     'Arabic': 'ar',
     'Japanese': 'ja',
@@ -40,7 +40,7 @@ class _TranslateWidgetState extends State<TranslateWidget> {
   };
 
   final List<String> _languages = [
-    'Bahasa Indonesia',
+    'Indonesian',
     'English',
     'Arabic',
     'Japanese',
@@ -280,7 +280,7 @@ class _TranslateWidgetState extends State<TranslateWidget> {
     return Column(
       children: [
         Text('Translate', style: Theme.of(context).textTheme.displayLarge),
-        SizedBox(height: 15),
+        SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -290,7 +290,7 @@ class _TranslateWidgetState extends State<TranslateWidget> {
                 (String? newValue) => _updateLanguageSelection(true, newValue!),
               ),
             ),
-            SizedBox(width: 15),
+            SizedBox(width: 16),
             Flexible(
               flex: 0,
               child: SizedBox(
@@ -323,7 +323,7 @@ class _TranslateWidgetState extends State<TranslateWidget> {
                 ),
               ),
             ),
-            SizedBox(width: 15),
+            SizedBox(width: 16),
             Expanded(
               child: _buildConstrainedDropdown(
                 _selectedLanguage2,
@@ -333,7 +333,7 @@ class _TranslateWidgetState extends State<TranslateWidget> {
             ),
           ],
         ),
-        SizedBox(height: 15),
+        SizedBox(height: 16),
         _buildTextField(
           controller: _sourceTextController,
           hintText: "Enter text to translate...",
@@ -341,7 +341,7 @@ class _TranslateWidgetState extends State<TranslateWidget> {
           onCopy: () => _copyToClipboard(_sourceTextController),
           onClear: _clearSourceText,
         ),
-        SizedBox(height: 15),
+        SizedBox(height: 16),
         _buildTextField(
           controller: _translatedTextController,
           hintText: "Translation result...",

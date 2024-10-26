@@ -112,7 +112,7 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
       children: [
         Text('Text Summarizer',
             style: Theme.of(context).textTheme.displayLarge),
-        const SizedBox(height: 15),
+        const SizedBox(height: 16),
         _buildTextField(
           controller: _sourceTextController,
           hintText: "Enter text to summarize...",
@@ -121,7 +121,7 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
           onClear: _clearSourceText,
         ),
         if (_isSummarizing || _hasSummarizedText.value) ...[
-          const SizedBox(height: 15),
+          const SizedBox(height: 16),
           _buildTextField(
             controller: _summarizedTextController,
             hintText: "Summary result...",
@@ -130,7 +130,7 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
             readOnly: true,
           ),
         ],
-        const SizedBox(height: 15),
+        const SizedBox(height: 16),
         Row(
           children: [
             Expanded(
@@ -153,7 +153,7 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
                 ),
               ),
             ),
-            const SizedBox(width: 15),
+            const SizedBox(width: 16),
             Flexible(
               flex: 2,
               child: SizedBox(

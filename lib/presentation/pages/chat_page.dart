@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: _buildUI(),
     );
@@ -76,7 +76,7 @@ class _ChatPageState extends State<ChatPage> {
       scrollToBottomOptions: ScrollToBottomOptions(
         disabled: false,
         scrollToBottomBuilder: (scrollController) => Positioned(
-          bottom: 15,
+          bottom: 16,
           left: 0,
           right: 0,
           child: Center(
@@ -113,8 +113,8 @@ class _ChatPageState extends State<ChatPage> {
       inputOptions: InputOptions(
         alwaysShowSend: true,
         inputMaxLines: 5,
-        inputToolbarPadding: const EdgeInsets.only(bottom: 15),
-        inputToolbarMargin: const EdgeInsets.only(top: 15),
+        inputToolbarPadding: const EdgeInsets.only(bottom: 16),
+        inputToolbarMargin: const EdgeInsets.only(top: 16),
         inputTextStyle: GoogleFonts.lato(),
         sendButtonBuilder: (onSend) {
           return IconButton(
@@ -138,6 +138,11 @@ class _ChatPageState extends State<ChatPage> {
           hintStyle: GoogleFonts.lato(color: Colors.grey, fontSize: 14),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          fillColor: Theme.of(context)
+              .colorScheme
+              .inverseSurface
+              .withAlpha((0.5 * 255).toInt()),
+          filled: true,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
                 color: Theme.of(context)

@@ -18,11 +18,11 @@ class _RewordPageState extends State<RewordPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(16),
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).dialogBackgroundColor,
                       borderRadius: BorderRadius.circular(25),
@@ -41,7 +41,7 @@ class _RewordPageState extends State<RewordPage> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).dialogBackgroundColor,
                       borderRadius: BorderRadius.circular(25),
@@ -60,7 +60,7 @@ class _RewordPageState extends State<RewordPage> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).dialogBackgroundColor,
                     borderRadius: BorderRadius.circular(25),

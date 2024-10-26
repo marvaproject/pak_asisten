@@ -19,7 +19,8 @@ class ImagePage extends StatefulWidget {
   State<ImagePage> createState() => _ImagePageState();
 }
 
-class _ImagePageState extends State<ImagePage> {
+class _ImagePageState extends State<ImagePage>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _promptController = TextEditingController();
   final FluxService _fluxService = FluxService();
   Uint8List? _generatedImage;
@@ -30,12 +31,26 @@ class _ImagePageState extends State<ImagePage> {
 
   Set<String> _selectedFilters = {};
 
+  late AnimationController _popupController;
+  late Animation<double> _popupAnimation;
+
   @override
   void initState() {
     super.initState();
+    _popupController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _popupAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _popupController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
     _promptController.addListener(() {
       if (mounted) {
-        // Periksa apakah widget masih aktif
         setState(() {
           _showClearButton = _promptController.text.isNotEmpty;
         });
@@ -45,8 +60,29 @@ class _ImagePageState extends State<ImagePage> {
 
   @override
   void dispose() {
+    _popupController.dispose();
     _promptController.dispose();
     super.dispose();
+  }
+
+  void _showFilterPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ScaleTransition(
+          scale: _popupAnimation,
+          child: Dialog(
+            child: FilterPopup(
+              selectedFilters: _selectedFilters.toList(),
+              onFiltersChanged: _updateFilters,
+            ),
+          ),
+        );
+      },
+    );
+
+    // Start the animation when the dialog is shown
+    _popupController.forward();
   }
 
   Future<void> _generateImage() async {
@@ -213,20 +249,6 @@ class _ImagePageState extends State<ImagePage> {
     });
   }
 
-  void _showFilterPopup() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: FilterPopup(
-            selectedFilters: _selectedFilters.toList(),
-            onFiltersChanged: _updateFilters,
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -237,14 +259,14 @@ class _ImagePageState extends State<ImagePage> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text('Image Generation',
                           style: Theme.of(context).textTheme.displayLarge),
-                      SizedBox(height: 15),
+                      SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
                         child: AspectRatio(
@@ -331,7 +353,7 @@ class _ImagePageState extends State<ImagePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(16),
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -422,6 +444,11 @@ class _ImagePageState extends State<ImagePage> {
                               color: Colors.grey, fontSize: 14),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
+                          fillColor: Theme.of(context)
+                              .colorScheme
+                              .inverseSurface
+                              .withAlpha((0.5 * 255).toInt()),
+                          filled: true,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Theme.of(context)

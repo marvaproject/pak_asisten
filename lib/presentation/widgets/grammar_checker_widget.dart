@@ -107,7 +107,7 @@ class _GrammarCheckerWidgetState extends State<GrammarCheckerWidget> {
       children: [
         Text('Grammar Checker',
             style: Theme.of(context).textTheme.displayLarge),
-        const SizedBox(height: 15),
+        const SizedBox(height: 16),
         _buildTextField(
           controller: _sourceTextController,
           hintText: "Enter text to check grammar...",
@@ -115,7 +115,7 @@ class _GrammarCheckerWidgetState extends State<GrammarCheckerWidget> {
           onCopy: () => _copyToClipboard(_sourceTextController),
           onClear: _clearSourceText,
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 16),
         if (_isChecking || _checkedTextController.text.isNotEmpty) ...[
           _buildTextField(
             controller: _checkedTextController,
@@ -125,7 +125,7 @@ class _GrammarCheckerWidgetState extends State<GrammarCheckerWidget> {
             readOnly: true,
           ),
         ],
-        const SizedBox(height: 15),
+        const SizedBox(height: 16),
         Row(
           children: [
             Expanded(

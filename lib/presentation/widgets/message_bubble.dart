@@ -148,7 +148,7 @@ class MessageBubble extends StatelessWidget {
                   ),
                 ),
                 contentPadding:
-                    EdgeInsets.only(bottom: 15, left: 15, right: 15),
+                    EdgeInsets.only(bottom: 16, left: 16, right: 16),
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: text));
                   Navigator.pop(context);

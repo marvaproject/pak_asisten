@@ -136,12 +136,12 @@ class _ScanPageState extends State<ScanPage> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     children: [
                       Text('Text Recognition',
                           style: Theme.of(context).textTheme.displayLarge),
-                      SizedBox(height: 15),
+                      SizedBox(height: 16),
                       AspectRatio(
                         aspectRatio: 4 / 3,
                         child: Container(
@@ -225,6 +225,8 @@ class _ScanPageState extends State<ScanPage> {
                           hintStyle: GoogleFonts.lato(
                               color: Colors.grey, fontSize: 14),
                           contentPadding: EdgeInsets.all(20),
+                          fillColor: Theme.of(context).colorScheme.inverseSurface.withAlpha((0.5 * 255).toInt()),
+                          filled: true,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Theme.of(context)
@@ -276,7 +278,7 @@ class _ScanPageState extends State<ScanPage> {
             ),
             if (_image != null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.only(bottom: 16),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: TextButton(

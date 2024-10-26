@@ -13,13 +13,37 @@ class FilterPopup extends StatefulWidget {
   _FilterPopupState createState() => _FilterPopupState();
 }
 
-class _FilterPopupState extends State<FilterPopup> {
+class _FilterPopupState extends State<FilterPopup>
+    with SingleTickerProviderStateMixin {
   List<String> _selectedFilters = [];
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _selectedFilters = List.from(widget.selectedFilters);
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ))
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _toggleFilter(String filter) {
@@ -39,39 +63,42 @@ class _FilterPopupState extends State<FilterPopup> {
     final double popupWidth = screenSize.width * 0.7;
     final double popupHeight = screenSize.height * 0.6;
 
-    return Container(
-      width: popupWidth,
-      height: popupHeight,
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.inverseSurface,
-          borderRadius: BorderRadius.circular(25),
-          border: Border.all(
-              color: Theme.of(context).colorScheme.outlineVariant, width: 1)),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 15, bottom: 6),
-            child: Text('Filter',
-                style: GoogleFonts.lato(
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold)),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: filterCategories
-                      .map((category) => _buildCategorySection(category))
-                      .toList(),
+    return ScaleTransition(
+      scale: _animation,
+      child: Container(
+        width: popupWidth,
+        height: popupHeight,
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.inverseSurface,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+                color: Theme.of(context).colorScheme.outlineVariant, width: 1)),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 16, bottom: 6),
+              child: Text('Filter',
+                  style: GoogleFonts.lato(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: filterCategories
+                        .map((category) => _buildCategorySection(category))
+                        .toList(),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -127,7 +154,7 @@ final List<FilterCategory> filterCategories = [
     'abstract',
     'anime',
     'art deco',
-    'art nouveau',
+    ' art nouveau',
     'cartoon',
     'comic',
     'cyberpunk',

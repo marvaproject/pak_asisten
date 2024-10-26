@@ -14,16 +14,21 @@ class _QuizPageState extends State<QuizPage> {
   String? _selectedDifficulty;
   String? _selectedQuestionCount;
   final TextEditingController _materialController = TextEditingController();
-  bool _isGenerating = false;
-
-  final BorderRadius _borderRadius = BorderRadius.circular(30);
+  final bool _isGenerating = false;
 
   final List<String> _languages = [
-    'English',
     'Indonesian',
-    'Spanish',
-    'French',
-    'German'
+    'English',
+    'Arabic',
+    'Japanese',
+    'Korean',
+    'Chinese',
+    'Russian',
+    'Turkish',
+    'Malay',
+    'Thai',
+    'Javanese',
+    'Sundanese',
   ];
 
   final List<String> _subjects = [
@@ -32,20 +37,31 @@ class _QuizPageState extends State<QuizPage> {
     'Chemistry',
     'Biology',
     'History',
-    'Geography'
+    'Geography',
+    'Computer Science',
+    'Literature',
+    'Art History',
+    'Economics',
+    'Psychology',
+    'Sociology',
+    'Environmental Science',
+    'Astronomy',
+    'Statistics',
+    'Philosophy',
+    'Political Science',
+    'Music Theory',
+    'Physical Education',
+    'Health Education',
+    'Engineering',
+    'Linguistics',
+    'Civics',
+    'Business Studies',
+    'Information Technology'
   ];
 
   final List<String> _difficulties = ['Easy', 'Medium', 'Hard', 'Expert'];
 
   final List<String> _questionCounts = ['5', '10', '15', '20', '25', '30'];
-
-  bool get _isFormValid {
-    return _selectedLanguage != null &&
-        _selectedSubject != null &&
-        _selectedDifficulty != null &&
-        _selectedQuestionCount != null &&
-        _materialController.text.isNotEmpty;
-  }
 
   Widget _buildConstrainedDropdown({
     required String? value,
@@ -57,12 +73,12 @@ class _QuizPageState extends State<QuizPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16, bottom: 8),
+          padding: const EdgeInsets.only(left: 8, bottom: 8),
           child: Text(
             hint,
             style: GoogleFonts.lato(
               fontSize: 14,
-              color: Color(0xFF274688),
+              color: Theme.of(context).textTheme.displayLarge!.color,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -88,11 +104,11 @@ class _QuizPageState extends State<QuizPage> {
               child: DropdownButton<String>(
                 value: value,
                 hint: Text(
-                  'Select ${hint}',
+                  'Select $hint',
                   style: GoogleFonts.lato(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
+                      color: Colors.grey,
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal),
                 ),
                 onChanged: onChanged,
                 isExpanded: true,
@@ -132,93 +148,143 @@ class _QuizPageState extends State<QuizPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(15),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Text('Quiz Generation',
+                    style: Theme.of(context).textTheme.displayLarge),
+                SizedBox(height: 16),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).dialogBackgroundColor,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(149, 157, 165, 0.2),
+                          blurRadius: 24,
+                          spreadRadius: 0,
+                          offset: Offset(
+                            0,
+                            8,
+                          ),
+                        ),
+                      ]),
                   child: Column(
                     children: [
-                      Text('Quiz Generation',
-                          style: Theme.of(context).textTheme.displayLarge),
-                      SizedBox(height: 15),
-                      _buildConstrainedDropdown(
-                        value: _selectedLanguage,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedLanguage = newValue;
-                          });
-                        },
-                        items: _languages,
-                        hint: 'Language',
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildConstrainedDropdown(
+                              value: _selectedLanguage,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedLanguage = newValue;
+                                });
+                              },
+                              items: _languages,
+                              hint: 'Language',
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          Expanded(
+                            child: _buildConstrainedDropdown(
+                              value: _selectedSubject,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedSubject = newValue;
+                                });
+                              },
+                              items: _subjects,
+                              hint: 'Subject',
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 15),
-                      _buildConstrainedDropdown(
-                        value: _selectedSubject,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedSubject = newValue;
-                          });
-                        },
-                        items: _subjects,
-                        hint: 'Subject',
+                      SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildConstrainedDropdown(
+                              value: _selectedDifficulty,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedDifficulty = newValue;
+                                });
+                              },
+                              items: _difficulties,
+                              hint: 'Difficulty',
+                            ),
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(
+                            child: _buildConstrainedDropdown(
+                              value: _selectedQuestionCount,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedQuestionCount = newValue;
+                                });
+                              },
+                              items: _questionCounts,
+                              hint: 'Number of Questions',
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 15),
-                      _buildConstrainedDropdown(
-                        value: _selectedDifficulty,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedDifficulty = newValue;
-                          });
-                        },
-                        items: _difficulties,
-                        hint: 'Difficulty',
+                      SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, bottom: 8),
+                        child: Text(
+                          "Material or Topic",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            color:
+                                Theme.of(context).textTheme.displayLarge?.color,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 15),
-                      _buildConstrainedDropdown(
-                        value: _selectedQuestionCount,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedQuestionCount = newValue;
-                          });
-                        },
-                        items: _questionCounts,
-                        hint: 'Number of Questions',
-                      ),
-                      SizedBox(height: 15),
                       TextField(
                         controller: _materialController,
                         maxLines: 1,
                         decoration: InputDecoration(
                           hintText: 'Enter material or topic',
-                          hintStyle: GoogleFonts.lato(
-                              color: Colors.grey, fontSize: 14),
-                          contentPadding: const EdgeInsets.all(20),
+                          hintStyle:
+                              GoogleFonts.lato(color: Colors.grey, fontSize: 14),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          fillColor: Theme.of(context)
+                              .colorScheme
+                              .inverseSurface
+                              .withAlpha((0.5 * 255).toInt()),
                           filled: true,
-                          fillColor:
-                              Theme.of(context).colorScheme.inverseSurface,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Theme.of(context)
-                                  .inputDecorationTheme
-                                  .border!
-                                  .borderSide
-                                  .color,
-                              width: 0.5,
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border!
+                                    .borderSide
+                                    .color,
+                                width: 0.5),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
                             ),
-                            borderRadius: _borderRadius,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Theme.of(context)
-                                  .inputDecorationTheme
-                                  .border!
-                                  .borderSide
-                                  .color,
-                              width: 0.5,
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border!
+                                    .borderSide
+                                    .color,
+                                width: 0.5),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
                             ),
-                            borderRadius: _borderRadius,
                           ),
                         ),
                         onChanged: (value) {
@@ -228,27 +294,25 @@ class _QuizPageState extends State<QuizPage> {
                     ],
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: TextButton(
-                  onPressed: () {},
-                  style: Theme.of(context).filledButtonTheme.style,
-                  child: Text(
-                    _isGenerating ? "Generating..." : "Generate Quiz",
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).textTheme.displayMedium?.color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                SizedBox(height: 32),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: TextButton(
+                    onPressed: () {},
+                    style: Theme.of(context).filledButtonTheme.style,
+                    child: Text(
+                      _isGenerating ? "Generating..." : "Generate Quiz",
+                      style: GoogleFonts.lato(
+                        color: Theme.of(context).textTheme.displayMedium?.color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
