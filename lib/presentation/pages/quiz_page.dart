@@ -114,7 +114,7 @@ class _QuizPageState extends State<QuizPage> {
                 isExpanded: true,
                 icon: Icon(Icons.arrow_drop_down, color: Color(0xFF274688)),
                 style: GoogleFonts.lato(
-                  fontSize: 15,
+                  fontSize: 16,
                   color: Color(0xFF274688),
                   fontWeight: FontWeight.bold,
                 ),

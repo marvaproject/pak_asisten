@@ -28,7 +28,7 @@ class PakAsisten extends StatelessWidget {
         themeMode: themeProvider.themeMode,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: NavBar(),
+        home: QuizScreenWidget(),
         // home: AnimatedSplashScreen(
         //   splash: 'assets/logo/LogoSplashScreen.gif',
         //   splashIconSize: 300,

@@ -22,7 +22,7 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: WidgetStateProperty.all(Color(0xFF274688)),
       textStyle: WidgetStateProperty.all(
         GoogleFonts.lato(
-          fontSize: 15,
+          fontSize: 16,
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
@@ -33,7 +33,7 @@ ThemeData lightTheme = ThemeData(
       ),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(25)),
         ),
       ),
       shadowColor: WidgetStateProperty.all(Color(0x4C274688)),
@@ -47,7 +47,7 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: WidgetStateProperty.all(Colors.white),
       textStyle: WidgetStateProperty.all(
         GoogleFonts.lato(
-          fontSize: 15,
+          fontSize: 16,
           color: Color(0xFF274688),
           fontWeight: FontWeight.bold,
         ),
@@ -56,7 +56,7 @@ ThemeData lightTheme = ThemeData(
       padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(25)),
           side: BorderSide(
               color: Color(0xFF274688), width: 0.5, style: BorderStyle.solid),
         ),

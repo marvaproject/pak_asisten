@@ -23,8 +23,7 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
-    final navigationController =
-        Provider.of<NavigationController>(context); // Akses di sini
+    final navigationController = Provider.of<NavigationController>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -56,7 +55,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 ?.color,
             iconSize: 22,
             textStyle: GoogleFonts.lato(
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Theme.of(context)
                   .bottomNavigationBarTheme

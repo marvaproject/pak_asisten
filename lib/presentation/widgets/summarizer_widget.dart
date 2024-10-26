@@ -198,7 +198,7 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
             isExpanded: true,
             icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF274688)),
             style: GoogleFonts.lato(
-              fontSize: 15,
+              fontSize: 16,
               color: const Color(0xFF274688),
               fontWeight: FontWeight.bold,
             ),

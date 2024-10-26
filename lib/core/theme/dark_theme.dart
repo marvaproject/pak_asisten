@@ -21,7 +21,7 @@ ThemeData darkTheme = ThemeData(
       backgroundColor: WidgetStateProperty.all(Color(0xFF274688)),
       textStyle: WidgetStateProperty.all(
         GoogleFonts.lato(
-          fontSize: 15,
+          fontSize: 16,
           color: Color(0xFFF4F8FF),
           fontWeight: FontWeight.bold,
         ),
@@ -32,7 +32,7 @@ ThemeData darkTheme = ThemeData(
       ),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(25)),
         ),
       ),
       shadowColor: WidgetStateProperty.all(Color(0x4C274688)),
@@ -46,7 +46,7 @@ ThemeData darkTheme = ThemeData(
       backgroundColor: WidgetStateProperty.all(Color(0xFFF4F8FF)),
       textStyle: WidgetStateProperty.all(
         GoogleFonts.lato(
-          fontSize: 15,
+          fontSize: 16,
           color: Color(0xFF274688),
           fontWeight: FontWeight.bold,
         ),
@@ -55,7 +55,7 @@ ThemeData darkTheme = ThemeData(
       padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(25)),
           side: BorderSide(
               color: Color(0xFF274688), width: 0.5, style: BorderStyle.solid),
         ),
@@ -94,7 +94,7 @@ ThemeData darkTheme = ThemeData(
   ),
   textTheme: TextTheme(
     bodySmall: GoogleFonts.lato(
-      fontSize: 14,
+      fontSize: 12,
       color: Color(0xFFFFFFFF),
     ),
     bodyMedium: GoogleFonts.lato(

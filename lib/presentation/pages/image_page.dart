@@ -213,7 +213,7 @@ class _ImagePageState extends State<ImagePage>
         await file.writeAsBytes(_generatedImage!);
 
         await Share.shareXFiles([XFile(file.path)],
-            text: 'Check out this generated image!');
+            text: '');
 
         // Hapus file temporary
         await file.delete();
