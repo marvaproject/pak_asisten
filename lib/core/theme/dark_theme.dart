@@ -9,9 +9,12 @@ ThemeData darkTheme = ThemeData(
     secondary: Color(0xFFF4F8FF),
     outline: Color(0xFF274688),
     outlineVariant: Color(0xFFBBBBBB),
+    shadow: Color(0x4C274688),
     inverseSurface: Color(0xFF14274F),
     error: Color(0xFFE74049),
+    onSecondaryContainer: Color(0xFFF4F8FF),
     tertiary: Color(0xFF274688),
+    onTertiary: Color(0xFFFFFFFF),
     tertiaryContainer: Color(0xFFF4F8FF),
   ),
   filledButtonTheme: FilledButtonThemeData(
@@ -101,10 +104,18 @@ ThemeData darkTheme = ThemeData(
       fontSize: 12,
       color: Color(0xFFFFFFFF),
     ),
+    displaySmall: GoogleFonts.lato(
+      color: Color(0xFFFFFFFF),
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+    ),
     displayMedium: GoogleFonts.lato(
       color: Color(0xFFF4F8FF),
     ),
     displayLarge: GoogleFonts.lato(
-        color: Color(0xFFFFFFFF), fontSize: 20, fontWeight: FontWeight.bold),
+      color: Color(0xFFFFFFFF),
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
   ),
 );

@@ -12,7 +12,9 @@ ThemeData lightTheme = ThemeData(
     shadow: Color(0x4C274688),
     inverseSurface: Color(0xFFFFFFFF),
     error: Color(0xFFE74049),
+    onSecondaryContainer: Color(0xFF274688),
     tertiary: Color(0xFFFFFFFF),
+    onTertiary: Color(0xFF274688),
     tertiaryContainer: Color(0xFFFFFFFF),
   ),
   filledButtonTheme: FilledButtonThemeData(
@@ -103,6 +105,11 @@ ThemeData lightTheme = ThemeData(
     bodyMedium: GoogleFonts.lato(
       fontSize: 12,
       color: Color(0xFF171F22),
+    ),
+    displaySmall: GoogleFonts.lato(
+      color: Color(0xFFFFFFFF),
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
     ),
     displayMedium: GoogleFonts.lato(
       color: Color(0xFFFFFFFF),
