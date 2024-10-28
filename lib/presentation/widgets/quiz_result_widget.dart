@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pak_asisten/core/services/custom_icon_icons.dart';
 import 'package:pak_asisten/core/utils/constants/quiz_grade_data.dart';
+import 'package:pak_asisten/presentation/app.dart';
 import 'package:pak_asisten/presentation/controllers/navigation_controller.dart';
 import 'package:pak_asisten/presentation/providers/quiz_provider.dart';
 import 'package:pak_asisten/presentation/widgets/quiz_capture_widget.dart';
@@ -379,7 +380,16 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    Provider.of<NavigationController>(context, listen: false).changeIndex(3);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NavBar(),
+                      ),
+                      (route) => false,
+                    ).then((_) {
+                      Provider.of<NavigationController>(context, listen: false)
+                          .changeIndex(3);
+                    });
                   },
                   style: Theme.of(context).filledButtonTheme.style,
                   child: Text(
