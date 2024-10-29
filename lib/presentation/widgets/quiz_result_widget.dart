@@ -130,8 +130,7 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
           [XFile(imagePath)],
           text: 'Check out my quiz result!\n'
               'Score: ${widget.results['score'].toStringAsFixed(0)}\n'
-              'Grade: ${widget.results['grade']}\n'
-              '${widget.results['message']}',
+              'Grade: ${widget.results['grade']}',
         );
       }
     } catch (e) {
@@ -387,8 +386,11 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
                       ),
                       (route) => false,
                     ).then((_) {
-                      Provider.of<NavigationController>(context, listen: false)
-                          .changeIndex(3);
+                      if (mounted) {
+                        Provider.of<NavigationController>(context,
+                                listen: false)
+                            .changeIndex(3);
+                      }
                     });
                   },
                   style: Theme.of(context).filledButtonTheme.style,

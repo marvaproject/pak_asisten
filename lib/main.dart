@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:pak_asisten/core/config/env/env.dart';
@@ -13,15 +14,22 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => NavigationController()),
+        ChangeNotifierProvider.value(value: NavigationController()),
         ChangeNotifierProvider(create: (_) => QuizProvider())
       ],
       child: PakAsisten(),
     ),
   );
 
-  ErrorHandler.runWithTry(() {
-    WidgetsFlutterBinding.ensureInitialized();
-    Gemini.init(apiKey: Env.geminiApiKey);
-  });
+  ErrorHandler.runWithTry(
+    () {
+      WidgetsFlutterBinding.ensureInitialized();
+      Gemini.init(apiKey: Env.geminiApiKey);
+    },
+    defaultValue: () {
+      if (kDebugMode) {
+        print("Failed to initialize Gemini");
+      }
+    },
+  );
 }

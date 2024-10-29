@@ -29,54 +29,52 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Container(
         width: double.infinity,
         padding: EdgeInsets.only(top: 10),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SvgPicture.asset(
-                'assets/logo/LightLogoAppBar.svg',
-                width: 150,
-                // ignore: deprecated_member_use
-                color: isDarkMode ? Colors.white : null,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          SvgPicture.asset(
+            'assets/logo/LightLogoAppBar.svg',
+            width: 150,
+            // ignore: deprecated_member_use
+            color: isDarkMode ? Colors.white : null,
+          ),
+          FlutterSwitch(
+              // Switch Button Dark Mode
+              width: 50,
+              height: 30,
+              toggleSize: 28,
+              value: themeProvider.themeMode == ThemeMode.dark,
+              borderRadius: 30,
+              padding: 2,
+              activeToggleColor: Color(0xFF274688),
+              inactiveToggleColor: Color(0xFF14274F),
+              activeSwitchBorder: Border.all(
+                color: Color(0xFF274688),
+                width: 2,
               ),
-              FlutterSwitch(
-                // Switch Button Dark Mode
-                width: 50,
-                height: 30,
-                toggleSize: 28,
-                value: themeProvider.themeMode == ThemeMode.dark,
-                borderRadius: 30,
-                padding: 2,
-                activeToggleColor: Color(0xFF274688),
-                inactiveToggleColor: Color(0xFF14274F),
-                activeSwitchBorder: Border.all(
-                  color: Color(0xFF274688),
-                  width: 2,
-                ),
-                inactiveSwitchBorder: Border.all(
-                  color: Color(0xFF14274F),
-                  width: 2,
-                ),
-                activeColor: Color(0xFF14274F),
-                inactiveColor: Color(0xFFF4F8FF),
-                activeIcon: Icon(
-                  CustomIcon.moon,
-                  color: Colors.amber,
-                ),
-                inactiveIcon: Icon(
-                  CustomIcon.sun,
-                  color: Colors.amber,
-                ),
-                onToggle: (value) {
-                  try {
-                    themeProvider.toggleTheme();
-                  } catch (e) {
-                    if (kDebugMode) {
-                      print('Error toggling theme: $e');
-                    }
-                  }
-                },
-              )
-            ]),
+              inactiveSwitchBorder: Border.all(
+                color: Color(0xFF14274F),
+                width: 2,
+              ),
+              activeColor: Color(0xFF14274F),
+              inactiveColor: Color(0xFFF4F8FF),
+              activeIcon: Icon(
+                CustomIcon.moon,
+                color: Colors.amber,
+              ),
+              inactiveIcon: Icon(
+                CustomIcon.sun,
+                color: Colors.amber,
+              ),
+              onToggle: (value) {
+                try {
+                  themeProvider.toggleTheme();
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error toggling theme: $e')),
+                  );
+                }
+              })
+        ]),
       ),
     );
   }
