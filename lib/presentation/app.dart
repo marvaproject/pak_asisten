@@ -26,15 +26,14 @@ class PakAsisten extends StatelessWidget {
         themeMode: themeProvider.themeMode,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: NavBar(),
-        // home: AnimatedSplashScreen(
-        //   splash: 'assets/logo/LogoSplashScreen.gif',
-        //   splashIconSize: 300,
-        //   nextScreen: const NavBar(),
-        //   duration: 2800,
-        //   splashTransition: SplashTransition.fadeTransition,
-        //   backgroundColor: const Color.fromARGB(255, 13, 28, 58),
-        // ),
+        home: AnimatedSplashScreen(
+          splash: 'assets/logo/LogoSplashScreen.gif',
+          splashIconSize: 300,
+          nextScreen: const NavBar(),
+          duration: 2800,
+          splashTransition: SplashTransition.fadeTransition,
+          backgroundColor: const Color.fromARGB(255, 13, 28, 58),
+        ),
       ),
     );
   }
