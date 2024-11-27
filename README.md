@@ -29,20 +29,15 @@ Aligned with the UN Sustainable Development Goals for Quality Education, Pak Asi
 # 🛠️ Features
 
 <div align="center">
-<p><img width="49%" src="https://github.com/user-attachments/assets/a6b53924-89b8-4d20-8e97-e97f39d1cb67
-"/>
+<p><img width="49%" src="https://github.com/user-attachments/assets/a6b53924-89b8-4d20-8e97-e97f39d1cb67"/>
 &nbsp;
-<img width="49%" src="https://github.com/user-attachments/assets/030583d3-11bf-4547-b648-34040bb3edf7
-"/></p>
+<img width="49%" src="https://github.com/user-attachments/assets/030583d3-11bf-4547-b648-34040bb3edf7"/></p>
 
-<p><img width="49%" src="https://github.com/user-attachments/assets/e4e42fa8-ef02-4708-a200-887478d572cc
-"/>
+<p><img width="49%" src="https://github.com/user-attachments/assets/e4e42fa8-ef02-4708-a200-887478d572cc"/>
 &nbsp;
-<img width="49%" src="https://github.com/user-attachments/assets/afe5fbd5-92c4-4839-9972-4e91a4147fdf
-"/></p>
+<img width="49%" src="https://github.com/user-attachments/assets/afe5fbd5-92c4-4839-9972-4e91a4147fdf"/></p>
 
-<p><img width="49%" src="https://github.com/user-attachments/assets/1ab19921-a634-4226-8cd2-43c27b0f9e38
-"/>
+<p><img width="49%" src="https://github.com/user-attachments/assets/1ab19921-a634-4226-8cd2-43c27b0f9e38"/>
 </div>
 
 <!-- Teknologi yang Digunakan -->
