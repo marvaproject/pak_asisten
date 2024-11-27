@@ -19,9 +19,11 @@
 <!-- Intro Project -->
 # 📖 Introduction
 
-Lorem ipsum odor amet, consectetuer adipiscing elit. Vulputate vehicula mi dis eget at odio. Vel ex felis eu montes; vitae mollis? Curabitur morbi venenatis sit nunc varius donec. Lacinia finibus donec convallis ornare erat pellentesque lacinia. Finibus cursus auctor nam hendrerit leo est cras nisi adipiscing.
+Welcome to our application, Pak Asisten, a revolutionary digital innovation in the realm of education designed to accompany students on their learning journeys. This application offers an intelligent solution powered by artificial intelligence that not only facilitates the learning process but also fosters creativity and the comprehensive potential of students. With a range of advanced features, Pak Asisten is poised to be a personal assistant that is always ready to help students explore knowledge and develop their skills effectively.
 
-Scelerisque suspendisse congue turpis non porta lacinia sollicitudin. Vehicula primis eleifend at dapibus scelerisque facilisis. Pretium egestas nibh hendrerit lobortis accumsan duis. Vitae quis convallis consectetur morbi morbi, penatibus class enim. Habitasse praesent porttitor pellentesque eu efficitur fames lobortis nulla augue. Iaculis viverra eu justo arcu commodo efficitur consequat mattis sollicitudin. Est nascetur auctor velit nisi sodales.
+In today's educational landscape, students face numerous challenges that hinder their learning experiences. These challenges include difficulties in quickly accessing information, limitations in creative media, and a lack of interactive learning tools. The time-consuming search for information, coupled with insufficient resources for creativity and minimal opportunities for independent practice, represents significant barriers in modern education. Pak Asisten aims to bridge these gaps with smart technology that simplifies and accelerates the learning process, empowering students to overcome these obstacles.
+
+Furthermore, Pak Asisten directly contributes to the fourth Sustainable Development Goal (SDG) of Quality Education. The application promotes equitable access to quality education through technology, facilitates inclusive learning, and encourages educational innovation. By providing widely accessible intelligent features, we strive to reduce educational disparities and offer equal learning opportunities for all students, ensuring that every learner has the chance to succeed.
 
 <!-- Fitur Project -->
 # 🛠️ Features
@@ -51,6 +53,8 @@ Scelerisque suspendisse congue turpis non porta lacinia sollicitudin. Vehicula p
 
 <!-- Architecture -->
 # 🏗 Architecture
+
+
 
 <!-- Contributor -->
 # 🧑‍💻 Contributors
