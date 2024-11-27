@@ -70,10 +70,9 @@ Aligned with the UN Sustainable Development Goals for Quality Education, Pak Asi
 # ⬇️ Download
 
 <div align="center">
-<img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white&width=10" height="50"/>
-&nbsp;
-<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" height="50"/>
-
+<a href="https://drive.google.com/drive/folders/1Bo4r3I4cR-Alvdm5prrcPCyVJhsvAq2Z?usp=sharing">
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" height="50"/>
+</a>
 </div>
 
 <!-- License -->
