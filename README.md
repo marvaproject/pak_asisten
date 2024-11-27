@@ -53,7 +53,40 @@ Aligned with the UN Sustainable Development Goals for Quality Education, Pak Asi
 <!-- Architecture -->
 # 🏗 Architecture
 
+### Project Structure
+The project follows a modular architecture with a well-organized `lib` directory, designed to enhance code maintainability and scalability. The key directories include:
 
+- `core`: Core application logic and fundamental components
+- `env`: Environment configurations and API key management
+- `model`: Data models and entities
+- `services`: Data access and application services
+- `theme`: Application theming and styling
+- `utils`: Utility classes, error handling, and helper functions
+- `presentation`: User interface components
+- `controllers`: State management and UI logic controllers
+
+### State Management
+The application leverages Provider for efficient and structured state management. Key implementation details include:
+
+- Utilizes `ChangeNotifier` for state providers
+- Implements `MultiProvider` at the root level for seamless state distribution
+- Dedicated providers for:
+  - Theme management
+  - Navigation control
+- Separates state logic from UI components
+- Ensures high performance and responsive user experience
+
+### Dependency Injection
+The dependency injection strategy focuses on creating a modular and scalable software architecture by:
+
+- Integrating cutting-edge libraries and frameworks
+- Utilizing components like:
+  - `google_nav_bar` for navigation
+  - `dio` for network requests
+  - `permission_handler` for device accessibility
+- Separating business logic from the user interface
+- Creating a clean, maintainable, and high-performance codebase
+- Facilitating easy testing and continuous integration
 
 <!-- Contributor -->
 # 🧑‍💻 Contributors
