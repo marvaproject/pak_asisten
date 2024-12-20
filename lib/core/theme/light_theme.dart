@@ -16,6 +16,7 @@ ThemeData lightTheme = ThemeData(
     tertiary: Color(0xFFFFFFFF),
     onTertiary: Color(0xFF274688),
     tertiaryContainer: Color(0xFFFFFFFF),
+    inversePrimary: Color(0xFFD1DBF2),
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(

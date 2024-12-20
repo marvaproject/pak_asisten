@@ -16,6 +16,7 @@ ThemeData darkTheme = ThemeData(
     tertiary: Color(0xFF274688),
     onTertiary: Color(0xFFFFFFFF),
     tertiaryContainer: Color(0xFFF4F8FF),
+    inversePrimary: Color(0xFFD1DBF2),
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(

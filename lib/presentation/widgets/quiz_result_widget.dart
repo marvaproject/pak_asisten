@@ -33,6 +33,10 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
 
+  Color getGradeColor(String grade) {
+    return GradeData.gradeInfo[grade]?['color'] ?? Colors.white;
+  }
+
   final screenshotController = ScreenshotController();
 
   Widget _listResultContainer(String title, String value) {
@@ -182,9 +186,6 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final Color gradeColor =
-        GradeData.gradeInfo[widget.results['grade']]!['color'] as Color;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
@@ -214,42 +215,45 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
                       ),
                       shape: BoxShape.circle),
                   child: Container(
-                    padding: EdgeInsets.all(28),
                     decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.inverseSurface,
-                        border: Border.all(
-                          width: 8,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer,
+                      border: Border.all(
+                        width: 8,
+                        color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
+                      ),
+                      shape: BoxShape.circle),
+                    child: Container(
+                      padding: EdgeInsets.all(28),
+                      decoration: BoxDecoration(
+                          color: getGradeColor(widget.results['grade']),
+                          border: Border.all(
+                            width: 5,
+                            color: Colors.white,
+                          ),
+                          shape: BoxShape.circle),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.results['grade'], // Tampilkan grade
+                              style: GoogleFonts.lato(
+                                color: Colors.white,
+                                fontSize: 52,
+                                height: 1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Score: ${widget.results['score'].toStringAsFixed(0)}",
+                              style: GoogleFonts.lato(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        shape: BoxShape.circle),
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Text(
-                            widget.results['grade'], // Tampilkan grade
-                            style: GoogleFonts.lato(
-                              color: widget.results['grade'] == 'A+'
-                                  ? Color(0xFF4CAF50)
-                                  : Color(0xFF274688),
-                              fontSize: 52,
-                              height: 1,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            "Score: ${widget.results['score'].toStringAsFixed(0)}",
-                            style: GoogleFonts.lato(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge
-                                  ?.color,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),
