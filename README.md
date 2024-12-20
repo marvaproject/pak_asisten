@@ -103,7 +103,7 @@ The dependency injection strategy focuses on creating a modular and scalable sof
 <a href="https://drive.google.com/drive/folders/1Bo4r3I4cR-Alvdm5prrcPCyVJhsvAq2Z?usp=sharing">
   <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" height="50"/>
 </a>
-</div>
+ </div>
 
 <!-- License -->
 # ⚖️ License
