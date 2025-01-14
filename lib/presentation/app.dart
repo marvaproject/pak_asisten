@@ -8,6 +8,7 @@ import 'package:pak_asisten/core/theme/theme_provider.dart';
 import 'package:pak_asisten/presentation/controllers/navigation_controller.dart';
 import 'package:pak_asisten/presentation/widgets/custom_app_bar.dart';
 import 'package:pak_asisten/presentation/widgets/custom_bottom_navbar.dart';
+import 'package:pak_asisten/presentation/widgets/quiz_capture_widget.dart';
 import 'package:provider/provider.dart';
 
 class PakAsisten extends StatelessWidget {
@@ -29,7 +30,7 @@ class PakAsisten extends StatelessWidget {
         home: AnimatedSplashScreen(
           splash: 'assets/logo/LogoSplashScreen.gif',
           splashIconSize: 300,
-          nextScreen: const NavBar(),
+          nextScreen: QuizCaptureWidget(results: 'results'),
           duration: 2800,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: const Color.fromARGB(255, 13, 28, 58),
