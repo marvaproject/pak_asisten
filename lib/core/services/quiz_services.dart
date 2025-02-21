@@ -49,50 +49,159 @@ class QuizService {
       ''';
 
       final response = await gemini.text(prompt);
-      if (response?.content?.parts?.first.text == null) {
-        throw Exception('Empty response from API');
+
+      // Debug print
+      print('Raw Gemini Response: ${response?.content?.parts}');
+
+      // Pastikan respons tidak null
+      if (response?.content?.parts == null || response!.content!.parts!.isEmpty) {
+        throw Exception('No response received from Gemini');
       }
 
-      String jsonString = response!.content!.parts!.first.text!;
+      // Ambil teks pertama
+      String rawResponse = response.content!.parts!.first.text ?? '';
 
-      // Clean up the response
-      jsonString = jsonString.trim();
-      
-      // Remove any markdown code blocks if present
-      if (jsonString.startsWith('```json')) {
-        jsonString = jsonString.replaceAll('```json', '').replaceAll('```', '');
-      }
-      
-      // Remove any non-JSON text before or after the JSON object
-      final jsonMatch = RegExp(r'{[\s\S]*}').firstMatch(jsonString);
-      if (jsonMatch == null) {
-        throw Exception('No valid JSON found in response');
-      }
-      
-      jsonString = jsonMatch.group(0)!;
+      // Debug print raw response
+      print('Raw Response Text: $rawResponse');
 
-      // Parse JSON
-      final Map<String, dynamic> jsonData;
+      // Fungsi pembersihan JSON yang lebih sederhana
+      String cleanJsonString(String input) {
+        // Hapus code block dan whitespace
+        input = input.replaceAll('```json', '')
+                     .replaceAll('```', '')
+                     .trim();
+        
+        // Cari JSON antara { dan }
+        final startIndex = input.indexOf('{');
+        final endIndex = input.lastIndexOf('}');
+        
+        if (startIndex != -1 && endIndex != -1) {
+          return input.substring(startIndex, endIndex + 1);
+        }
+        
+        return input;
+      }
+
+      // Bersihkan string JSON
+      String cleanedJsonString = cleanJsonString(rawResponse);
+
+      // Debug print cleaned JSON
+      print('Cleaned JSON: $cleanedJsonString');
+
+      // Parse JSON dengan error handling
+      Map<String, dynamic> jsonData;
       try {
-        jsonData = json.decode(jsonString);
+        jsonData = json.decode(cleanedJsonString);
       } catch (e) {
-        print('Invalid JSON response: $jsonString');
-        throw Exception('Invalid JSON format in response');
+        print('JSON Parsing Error: $e');
+        print('Problematic JSON: $cleanedJsonString');
+        
+        // Tambahan debugging
+        try {
+          // Coba parsing manual jika json.decode gagal
+          jsonData = _manualJsonParse(cleanedJsonString);
+        } catch (manualParseError) {
+          throw Exception('Failed to parse quiz JSON: $manualParseError');
+        }
       }
 
-      // Validate required fields
-      if (!jsonData.containsKey('questions') || 
-          !jsonData.containsKey('language') ||
-          !jsonData.containsKey('subject') ||
-          !jsonData.containsKey('material') ||
-          !jsonData.containsKey('difficulty')) {
-        throw Exception('Missing required fields in response');
-      }
+      // Validasi struktur JSON
+      _validateJsonStructure(jsonData);
 
+      // Konversi ke model
       return QuizModel.fromJson(jsonData);
+
     } catch (e) {
-      print('Error generating quiz: $e');
-      throw Exception('Failed to generate quiz: $e');
+      // Log error secara mendetail
+      print('Quiz Generation Error:');
+      print('Error Type: ${e.runtimeType}');
+      print('Error Details: $e');
+
+      // Rethrow dengan pesan yang lebih informatif
+      throw Exception('Failed to generate quiz: ${e.toString()}');
     }
+  }
+
+  // Fungsi validasi struktur JSON
+  void _validateJsonStructure(Map<String, dynamic> jsonData) {
+    if (!jsonData.containsKey('questions') || 
+        !(jsonData['questions'] is List) || 
+        jsonData['questions'].isEmpty) {
+      throw Exception('Invalid quiz JSON structure');
+    }
+
+    // Validasi setiap pertanyaan
+    for (var question in jsonData['questions']) {
+      if (!question.containsKey('question') ||
+          !question.containsKey('correct_answer') ||
+          !question.containsKey('incorrect_answers')) {
+        throw Exception('Incomplete question structure');
+      }
+    }
+  }
+
+  // Fungsi parsing manual sebagai fallback
+  Map<String, dynamic> _manualJsonParse(String input) {
+    // Implementasi parsing sederhana
+    input = input.trim();
+    
+    // Hapus karakter yang tidak valid
+    input = input.replaceAll('\n', '')
+                 .replaceAll('\t', '')
+                 .replaceAll(r'\s+', ' ');
+    
+    try {
+      return json.decode(input);
+    } catch (e) {
+      // Jika masih gagal, lempar error
+      throw Exception('Manual JSON parsing failed: $e');
+    }
+
+    //   final response = await gemini.text(prompt);
+    //   if (response?.content?.parts?.first.text == null) {
+    //     throw Exception('Empty response from API');
+    //   }
+
+    //   String jsonString = response!.content!.parts!.first.text!;
+
+    //   // Clean up the response
+    //   jsonString = jsonString.trim();
+
+    //   // Remove any markdown code blocks if present
+    //   if (jsonString.startsWith('```json')) {
+    //     jsonString = jsonString.replaceAll('```json', '').replaceAll('```', '');
+    //   }
+
+    //   // Remove any non-JSON text before or after the JSON object
+    //   final jsonMatch = RegExp(r'{[\s\S]*}').firstMatch(jsonString);
+    //   if (jsonMatch == null) {
+    //     throw Exception('No valid JSON found in response');
+    //   }
+
+    //   jsonString = jsonMatch.group(0)!;
+
+    //   // Parse JSON
+    //   final Map<String, dynamic> jsonData;
+    //   try {
+    //     jsonData = json.decode(jsonString);
+    //   } catch (e) {
+    //     print('Invalid JSON response: $jsonString');
+    //     throw Exception('Invalid JSON format in response');
+    //   }
+
+    //   // Validate required fields
+    //   if (!jsonData.containsKey('questions') ||
+    //       !jsonData.containsKey('language') ||
+    //       !jsonData.containsKey('subject') ||
+    //       !jsonData.containsKey('material') ||
+    //       !jsonData.containsKey('difficulty')) {
+    //     throw Exception('Missing required fields in response');
+    //   }
+
+    //   return QuizModel.fromJson(jsonData);
+    // } catch (e) {
+    //   print('Error generating quiz: $e');
+    //   throw Exception('Failed to generate quiz: $e');
+    // }
   }
 }

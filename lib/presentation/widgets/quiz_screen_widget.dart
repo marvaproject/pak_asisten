@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pak_asisten/presentation/widgets/quiz_result_widget.dart';
@@ -6,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:pak_asisten/presentation/providers/quiz_provider.dart';
 
 class QuizScreenWidget extends StatefulWidget {
+  const QuizScreenWidget({super.key});
+
   @override
   _QuizScreenWidgetState createState() => _QuizScreenWidgetState();
 }

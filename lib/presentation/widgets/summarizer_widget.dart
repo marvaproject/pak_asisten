@@ -137,13 +137,17 @@ class _SummarizerWidgetState extends State<SummarizerWidget> {
               flex: 3,
               child: SizedBox(
                 height: 44,
+                width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: _isSummarizing ? null : _summarizeText,
                   label: Text(
                     _isSummarizing ? "Summarizing..." : "Summarize",
                     style: GoogleFonts.lato(
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
+                      color: Theme.of(context).textTheme.displayMedium?.color ??
+                          Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   icon: Icon(_isSummarizing
                       ? Icons.hourglass_empty_rounded
